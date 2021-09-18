@@ -4,10 +4,56 @@
     --celeste-color:#4bb1dc;
     --gris-color: #828384;
 }
+
 #header img {
     width: 40px;
 }
 
 #header .nav-link:hover {
     color: var(--naranja-color);
+}
+
+#carousel-home {
+    position: relative;
+}
+
+#carousel-home img {
+    height: 70vh;
+    object-fit: cover;
+    filter: grayscale(40%);
+}
+
+#carousel-home .overlay {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+#carousel-home .overlay .container-fluid {
+    height: 90%;
+}
+
+#carousel-home .overlay .row {
+    height: 100%;
+}
+
+#carousel-home .overlay .btn {
+    color: white;
+}
+
+#carousel-home .overlay .btn:hover {
+    color: var(--negro-color);
+}
+
+#carousel-home .overlay .btn-st {
+    background-color: var(--naranja-color);
+}
+
+#carousel-home .overlay .btn-st:hover {
+    background-color: #d47747;
 }
