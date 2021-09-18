@@ -11,3 +11,7 @@
 #header .nav-link:hover {
     color: var(--naranja-color);
 }
+
+#categorias .btn {
+    color: var(--negro-color);
+}
