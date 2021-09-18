@@ -57,3 +57,7 @@
 #carousel-home .overlay .btn-st:hover {
     background-color: #d47747;
 }
+
+    #categorias .btn {
+    color: var(--negro-color);
+}
