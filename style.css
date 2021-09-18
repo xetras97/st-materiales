@@ -1,7 +1,13 @@
+:root {
+    --naranja-color: #EF8B57;
+    --negro-color: #0F0F0F;
+    --celeste-color:#4bb1dc;
+    --gris-color: #828384;
+}
 #header img {
     width: 40px;
 }
 
 #header .nav-link:hover {
-    color: #EF8B57;
+    color: var(--naranja-color);
 }
