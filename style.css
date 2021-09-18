@@ -61,3 +61,45 @@
     #categorias .btn {
     color: var(--negro-color);
 }
+
+#products-preview-2 .card {
+    height: 250px;
+}
+
+#products-preview-2 .card img {
+    object-fit: cover;
+    height: 70%;
+}
+
+#products-preview-2 .row {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+#products-preview-2 .container {
+    position: relative;
+}
+
+#products-preview-2 .flecha-izquierda, #products-preview-2 .flecha-derecha {
+    position: absolute;
+    display: flex;
+    width: 15%;
+    top: 0;
+    bottom: 0;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    filter: invert(1) grayscale(100);
+    opacity: 0.5;
+    align-items: center;
+    cursor: pointer;
+}
+
+#products-preview-2 .flecha-izquierda {
+    left: -3%;
+}
+
+#products-preview-2 .flecha-derecha {
+    right: -3%;
+}
