@@ -62,18 +62,14 @@
     color: var(--negro-color);
 }
 
-#products-preview-2 .card {
-    height: 250px;
-}
-
-#products-preview-2 .card img {
+#novedades-container .card .img-fluid {
+    height: 170px;
     object-fit: cover;
-    height: 70%;
 }
 
-#products-preview-2 .row {
-    overflow-y: hidden;
-    overflow-x: hidden;
+
+#novedades-container {
+    overflow: hidden;
     scroll-behavior: smooth;
 }
 
