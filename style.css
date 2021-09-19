@@ -65,8 +65,13 @@
 #novedades-container .card .img-fluid {
     height: 170px;
     object-fit: cover;
+    transition: all .5s ease-in-out;
 }
 
+#novedades-container .card .img-fluid:hover {
+    transition: all .5s ease-in-out;
+    height: 250px;
+}
 
 #novedades-container {
     overflow: hidden;
