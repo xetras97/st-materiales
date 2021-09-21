@@ -97,10 +97,31 @@
     cursor: pointer;
 }
 
+#products-preview-2 .flecha-izquierda-2, #products-preview-2 .flecha-derecha-2 {
+    border: none;
+    background-color: transparent;
+    filter: invert(1) grayscale(100);
+    opacity: 0.5;
+    align-items: center;
+    cursor: pointer;
+}
+
 #products-preview-2 .flecha-izquierda {
     left: -3%;
 }
 
 #products-preview-2 .flecha-derecha {
     right: -3%;
+}
+
+#novedades-container .card .card-body {
+    position: relative;
+}
+
+#novedades-container .card .badge-price {
+    position: absolute;
+    top: -40%;
+    left: 2%;
+    background-color: white;
+    font-size: 1rem;
 }
