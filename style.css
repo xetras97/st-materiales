@@ -125,3 +125,9 @@
     background-color: white;
     font-size: 1rem;
 }
+
+.info-container {
+    background-color: #ffffff;
+    background-image: linear-gradient(315deg, #ffffff 0%, #4bb1dc 37%, #4bb1dc 64%, #ffffff 100%);
+    
+}
