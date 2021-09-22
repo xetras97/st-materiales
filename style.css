@@ -144,3 +144,13 @@
 #promo-preview .container {
     position: relative;
 }
+
+.banner-catalogo {
+    height: 400px;
+    background-image: url("./assets/backgrounds/shoe.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    filter: grayscale(50%);
+}
