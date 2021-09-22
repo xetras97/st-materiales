@@ -191,3 +191,18 @@
 #section-banner .btn-catalogo i {
     font-size: 1.5rem;
 }
+
+#quienes-somos {
+    background-image: url("./assets/backgrounds/wave2.svg");
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+
+.quienes-somos__img {
+    width: 400px;
+    height: 400px;
+    background-image: url("./assets/backgrounds/pesas.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
