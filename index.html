@@ -234,7 +234,7 @@
             <div class="row">
               <div class="col">
                 <div class="col-12 text-center py-2">
-                  <button id="" class="flecha-izquierda-2 d-sm-none justify-content-center" type="button" onclick="ddesplazarIzquierda(contenedorNovedades)">
+                  <button id="" class="flecha-izquierda-2 d-sm-none justify-content-center" type="button" onclick="desplazarIzquierda(contenedorNovedades)">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                   </button>
@@ -292,7 +292,7 @@
               </div>
             </div>
             <div id="promo-container" class="row mt-4 row d-flex flex-nowrap">
-              <div class="col-4">
+              <div class="col-8 offset-2 col-sm-6 offset-sm-0 col-md-4">
                 <a href="#">
                   <div class="card bg-dark text-white">
                     <img src="./assets/materiales/IMG_9751.jpg" class="card-img" alt="...">
@@ -303,7 +303,7 @@
                   </div>
                 </a>
               </div>
-              <div class="col-4">
+              <div class="col-8 offset-4 col-sm-6 offset-sm-0 col-md-4">
                 <a href="#">
                   <div class="card bg-dark text-white">
                     <img src="./assets/materiales/IMG_9751.jpg" class="card-img" alt="...">
@@ -314,7 +314,7 @@
                   </div>
                 </a>
               </div>
-              <div class="col-4">
+              <div class="col-8 offset-4 col-sm-6 offset-sm-0 col-md-4">
                 <a href="#">
                   <div class="card bg-dark text-white">
                     <img src="./assets/materiales/IMG_9751.jpg" class="card-img" alt="...">
@@ -325,7 +325,7 @@
                   </div>
                 </a>
               </div>
-              <div class="col-4">
+              <div class="col-8 offset-4 col-sm-6 offset-sm-0 col-md-4">
                 <a href="#">
                   <div class="card bg-dark text-white">
                     <img src="./assets/materiales/IMG_9751.jpg" class="card-img" alt="...">
@@ -336,11 +336,12 @@
                   </div>
                 </a>
               </div>
-              <button id="flecha-izquierda" class="flecha-izquierda d-none d-sm-flex justify-content-center justify-content-sm-start" type="button" onclick="desplazarIzquierda(contenedorPromociones)">
+              <div class="col-2 d-sm-none"></div> <!-- <-- PERMITE MOVILIDAD DEL CONTENEDOR -->
+              <button id="flecha-izquierda" class="flecha-izquierda d-flex justify-content-end  justify-content-sm-start" type="button" onclick="desplazarIzquierda(contenedorPromociones)">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
-              <button id="flecha-derecha" class="flecha-derecha d-none d-sm-flex justify-content-center justify-content-sm-end" type="button" onclick="desplazarDerecha(contenedorPromociones)">
+              <button id="flecha-derecha" class="flecha-derecha d-flex justify-content-start justify-content-sm-end" type="button" onclick="desplazarDerecha(contenedorPromociones)">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
