@@ -23,7 +23,7 @@
     filter: grayscale(40%);
 }
 
-#carousel-home .overlay {
+#carousel-home .overlay, #section-banner .overlay {
     position: absolute;
     z-index: 1;
     top: 0;
@@ -145,12 +145,49 @@
     position: relative;
 }
 
+#section-banner {
+    position: relative;
+}
+
 .banner-catalogo {
-    height: 400px;
+    height: 350px;
     background-image: url("./assets/backgrounds/shoe.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
-    filter: grayscale(50%);
+}
+
+#section-banner .overlay {
+    backdrop-filter: grayscale(50%);
+}
+
+.banner-catalogo h2 {
+    color: var(--naranja-color);
+    text-shadow: 0px 0px 3px var(--negro-color);
+}
+
+#section-banner .btn-catalogo {
+    background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA  51%, #1FA2FF  100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: var(--negro-color);            
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;   
+}
+
+#section-banner .btn-catalogo:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: var(--negro-color);
+    text-decoration: none;
+}
+
+#section-banner .btn-catalogo i {
+    font-size: 1.5rem;
 }
