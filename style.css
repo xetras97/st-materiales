@@ -206,3 +206,16 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+footer {
+    background-color: var(--celeste-color);
+}
+
+footer a {
+    color: var(--negro-color);
+    text-decoration: none;
+}
+
+#footer a:hover {
+    color: white;
+}
