@@ -199,12 +199,15 @@
 }
 
 .quienes-somos__img {
-    width: 400px;
-    height: 400px;
-    background-image: url("./assets/backgrounds/pesas.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    max-width: 400px;
+    max-height: 400px;
+}
+
+@media (max-width: 992px) {
+    .quienes-somos__img {
+        max-width: 300px;
+        max-height: 300px;
+    }    
 }
 
 footer {
@@ -219,3 +222,5 @@ footer a {
 #footer a:hover {
     color: white;
 }
+
+
