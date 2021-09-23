@@ -5,11 +5,19 @@
     --gris-color: #828384;
 }
 
+body {
+    position: relative;
+}
+
 #header img {
     width: 40px;
 }
 
 #header .nav-link:hover {
+    color: var(--naranja-color);
+}
+
+#header .nav-link.active {
     color: var(--naranja-color);
 }
 
