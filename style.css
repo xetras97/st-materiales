@@ -218,6 +218,12 @@ body {
     }    
 }
 
+@media (max-width: 768px) {
+    #novedades-container, #promo-container {
+        overflow: scroll;
+    }
+}
+
 footer {
     background-color: var(--celeste-color);
 }
