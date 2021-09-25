@@ -1,0 +1,23 @@
+{
+  "name": "st-materiales",
+  "version": "1.0.0",
+  "description": "ST Materiales",
+  "main": "backend.js",
+  "scripts": {
+    "start": "node backend.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xetras97/st-materiales.git"
+  },
+  "author": "Xetras",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xetras97/st-materiales/issues"
+  },
+  "homepage": "https://github.com/xetras97/st-materiales#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
