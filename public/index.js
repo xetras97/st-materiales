@@ -17,14 +17,16 @@ function displayNovedades (productsList) {
     if (element.new === "Novedad") {
       productsHTML +=
         `<div class="col-6 col-md-4 col-lg-3 mt-2 card-container">
-          <div class="card">
-            <img src="${element.image}" class="img-fluid card-img-top" alt="${element.name}">
-            <div class="card-body">
-              <span class="badge text-dark badge-price">$${element.price}</span>
-              <h5 class="card-title">${element.name}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">${element.description}</h6>
+          <a href="#" class="text-dark" style="text-decoration: none;">
+            <div class="card h-100">
+              <img src="${element.image}" class="img-fluid card-img-top" alt="${element.name}">
+                <div class="card-body">
+                <span class="badge text-dark badge-price">$${element.price}</span>
+                <h5 class="card-title">${element.name}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">${element.description}</h6>
+                </div>
             </div>
-          </div>
+          </a>
         </div>`
     }
   });
