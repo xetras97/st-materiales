@@ -31,6 +31,7 @@ function displayNovedades (productsList) {
     }
   });
   document.getElementById("novedades-container").innerHTML += productsHTML;
+  document.getElementById("novedades-loading").style.display = "none";
 }
 
 function displayPromociones (productsList) {
@@ -53,6 +54,7 @@ function displayPromociones (productsList) {
     }
   });
   document.getElementById("promo-container").innerHTML += promocionesHTML;
+  document.getElementById("promo-loading").style.display = "none";
 }
 
 // Variables para slider de novedades //

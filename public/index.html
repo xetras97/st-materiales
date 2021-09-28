@@ -143,7 +143,13 @@
               </div>
             </div>
             <div id="novedades-container" class="row d-flex flex-nowrap">
-
+              <div id="novedades-loading" class="col mt-4">
+                <div class="d-flex justify-content-center text-info">
+                  <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
               <button id="flecha-izquierda" class="flecha-izquierda d-none d-sm-flex justify-content-center justify-content-sm-start" type="button" onclick="desplazarIzquierda(contenedorNovedades)">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
@@ -213,7 +219,13 @@
               </div>
             </div>
             <div id="promo-container" class="row mt-4 row d-flex flex-nowrap">
-
+              <div id="promo-loading" class="col mt-2">
+                <div class="d-flex justify-content-center text-info">
+                  <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
               <div class="col-2 d-sm-none"></div> <!-- <-- PERMITE MOVILIDAD DEL CONTENEDOR -->
               <button id="flecha-izquierda" class="flecha-izquierda d-flex justify-content-end  justify-content-sm-start" type="button" onclick="desplazarIzquierda(contenedorPromociones)">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
