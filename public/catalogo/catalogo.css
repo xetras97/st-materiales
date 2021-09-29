@@ -1,0 +1,17 @@
+#catalogo-display .card .img-fluid {
+    height: 240px;
+    object-fit: cover;
+    transition: all .5s ease-in-out;
+}
+
+#catalogo-display .card .card-body {
+    position: relative;
+}
+
+#catalogo-display  .card .badge-price {
+    position: absolute;
+    top: -40%;
+    left: 2%;
+    background-color: white;
+    font-size: 1rem;
+}

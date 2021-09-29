@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="../assets/logos/st-logo-zoomed.png"/>
     <title>Catálogo - ST Materiales</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="catalogo.css">
 </head>
 
 <body>
@@ -69,7 +70,103 @@
     </header>
 
     <main>
+        <section id="catalgo-info">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-12 align-baseline">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                              <li class="breadcrumb-item"><a href="../index.html" class="text-dark">Inicio</a></li>
+                              <li class="breadcrumb-item active" aria-current="page">Productos</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-12 mb-2 mt-2 border-top border-bottom">
+                        <h1 class="text-uppercase fs-2 fst-italic mb-0">Todos los productos</h1>
+                    </div>
+                    <div class="col">
+                        <div class="dropdown">
+                            <button class="btn btn-outline btn-sm dropdown-toggle text-uppercase" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                              Categorias
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                              <li><a href="#" class="dropdown-item">Deportes</a></li>
+                              <li><a href="#" class="dropdown-item">Funcional</a></li>
+                              <li><a href="#" class="dropdown-item">Yoga</a></li>
+                              <li><a href="#" class="dropdown-item">Barras y discos</a></li>
+                              <li><a href="#" class="dropdown-item">Promociones</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col text-end">
+                        <div class="dropdown">
+                            <button class="btn btn-outline btn-sm dropdown-toggle text-uppercase" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                              Ordenar
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                              <li><a href="#" class="dropdown-item">Precio (menor a mayor)</a></li>
+                              <li><a href="#" class="dropdown-item">Novedades</a></li>
+                              <li><a href="#" class="dropdown-item">Precio (Mayor a Menor)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <section id="catalogo-display">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 col-md-4 col-lg-3 mt-2 card-container">
+                        <a href="#" class="text-dark" style="text-decoration: none;">
+                          <div class="card h-100">
+                            <img src="../assets/materiales/192f239f-aadf-45bb-9eb5-afd22059ab31.jpg" class="img-fluid card-img-top" alt="${element.name}">
+                              <div class="card-body">
+                              <span class="badge text-dark badge-price">$ 10000</span>
+                              <h5 class="card-title">Producto 1</h5>
+                              <h6 class="card-subtitle mb-2 text-muted">Descripcion del producto</h6>
+                              </div>
+                          </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3 mt-2 card-container">
+                        <a href="#" class="text-dark" style="text-decoration: none;">
+                          <div class="card h-100">
+                            <img src="../assets/materiales/192f239f-aadf-45bb-9eb5-afd22059ab31.jpg" class="img-fluid card-img-top" alt="${element.name}">
+                              <div class="card-body">
+                              <span class="badge text-dark badge-price">$ 10000</span>
+                              <h5 class="card-title">Producto 1</h5>
+                              <h6 class="card-subtitle mb-2 text-muted">Descripcion del producto</h6>
+                              </div>
+                          </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <nav aria-label="Navegacion Productos">
+                            <ul class="pagination justify-content-center">
+                              <li class="page-item">
+                                <a class="page-link text-dark" href="#" aria-label="Previous">
+                                  <span aria-hidden="true">&laquo;</span>
+                                </a>
+                              </li>
+                              <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
+                              <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
+                              <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
+                              <li class="page-item">
+                                <a class="page-link text-dark" href="#" aria-label="Next">
+                                  <span aria-hidden="true">&raquo;</span>
+                                </a>
+                              </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer id="footer">
