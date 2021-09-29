@@ -6,7 +6,6 @@ const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 //Al cargar pantalla se hace un fetch de la base de datos
 window.onload = async() => {
   const productsList = await (await fetch ("/api/products")).json();
-  console.log(productsList);
   displayNovedades(productsList);
   displayPromociones(productsList);
 }
