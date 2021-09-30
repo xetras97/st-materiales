@@ -1,16 +1,43 @@
-window.onload = async() => {
-    const productsList = await (await fetch ("/api/products")).json();
-    console.log(productsList);
-    displayCatalogo(productsList);
+window.onload = async () => {
+    await traerProductos();
+    displayPagination(productsList);
+    displayCatalogo(1);
 }
 
-function displayCatalogo (productsList) {
+async function traerProductos() {
+    productsList = await (await fetch("/api/products")).json();
+    return productsList;
+}
+
+function displayPagination(array) {
+    let paginationHTML = `
+    <li class="page-item">
+        <a class="page-link text-dark" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+    </li>
+    `;
+    for (let p = 0; p < (array.length / 16); p++) {
+        paginationHTML += `<li class="page-item"><a class="page-link text-dark" href="#">${p + 1}</a></li>`
+        console.log("hace algo");
+    };
+    paginationHTML += `
+    <li class="page-item">
+        <a class="page-link text-dark" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>
+    `;
+    console.log(paginationHTML);
+    document.getElementById("pagination-container").innerHTML = paginationHTML;
+}
+
+async function displayCatalogo(page) {
+    productsListPagination = await (await fetch(`http://localhost:3000/api/products/pages?page=${page}&limit=16/`)).json();
     let productsHTML = ``;
-    
-    for (let p = 0; p < 12; p++) {
-        const product = productsList[p];
+    productsListPagination.results.forEach(product => {
         productsHTML += `
-        <div class="col-6 col-md-4 col-lg-3 mt-2 card-container">
+        <div class="col-12 col-md-4 col-lg-3 mt-2 card-container">
             <a href="#" class="text-dark" style="text-decoration: none;">
                 <div class="card h-100">
                     <img src="../${product.image}" class="img-fluid card-img-top" alt="${product.name}">
@@ -22,8 +49,7 @@ function displayCatalogo (productsList) {
                 </div>
             </a>
         </div>
-        `;    
-    }
-
+        `;
+    });
     document.getElementById("catalogo-row").innerHTML = productsHTML;
 }

@@ -1,3 +1,10 @@
+:root {
+    --naranja-color: #EF8B57;
+    --negro-color: #0F0F0F;
+    --celeste-color:#4bb1dc;
+    --gris-color: #828384;
+}
+
 #catalogo-display .card .img-fluid {
     height: 240px;
     object-fit: cover;
@@ -10,8 +17,18 @@
 
 #catalogo-display  .card .badge-price {
     position: absolute;
-    top: -30%;
+    top: -20%;
     left: 2%;
     background-color: white;
     font-size: 1rem;
+}
+
+#catalogo-display .card-body:hover > .badge-price{
+    transition: top 0.35s;
+    top: -30%;
+}
+
+#catalogo-display .card-container:hover {
+    transition: opacity 0.35s;
+    opacity: 0.8;
 }
