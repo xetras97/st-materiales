@@ -15,17 +15,21 @@ app.get('/api/products/pages', async (req, res) => {
   const endIndex = page * limit;
   
   const resultProducts = {};
-
-  if (endIndex < products.length) {
-    resultProducts.next = {
-      page: page + 1,
-      limit: limit,
+  
+  if (endIndex < products.length && startIndex > 0) {
+    resultProducts.info = {
+      next: `/api/products/pages?page=${page + 1}&limit=16/`,
+      prev:`/api/products/pages?page=${page - 1}&limit=16/`,
     };
-  }
-  if (startIndex > 0) {
-    resultProducts.previous = {
-      page: page - 1,
-      limit: limit,
+  } else if (endIndex < products.length) {
+    resultProducts.info = {
+      next: `/api/products/pages?page=${page + 1}&limit=16/`,
+      prev:"",
+    };
+  } else if (startIndex > 0) {
+    resultProducts.info = {
+      next:"",
+      prev:`/api/products/pages?page=${page - 1}&limit=16/`,
     };
   }
   resultProducts.results = products.slice(startIndex, endIndex);

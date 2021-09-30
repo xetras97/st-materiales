@@ -19,7 +19,6 @@ function displayPagination(array) {
     `;
     for (let p = 0; p < (array.length / 16); p++) {
         paginationHTML += `<li class="page-item"><a class="page-link text-dark" href="#">${p + 1}</a></li>`
-        console.log("hace algo");
     };
     paginationHTML += `
     <li class="page-item">
@@ -28,12 +27,11 @@ function displayPagination(array) {
         </a>
     </li>
     `;
-    console.log(paginationHTML);
     document.getElementById("pagination-container").innerHTML = paginationHTML;
 }
 
 async function displayCatalogo(page) {
-    productsListPagination = await (await fetch(`http://localhost:3000/api/products/pages?page=${page}&limit=16/`)).json();
+    productsListPagination = await (await fetch(`/api/products/pages?page=${page}&limit=16/`)).json();
     let productsHTML = ``;
     productsListPagination.results.forEach(product => {
         productsHTML += `
