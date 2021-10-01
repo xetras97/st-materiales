@@ -1,7 +1,14 @@
 window.onload = async () => {
     await traerProductos();
+    setPagActual();
     displayPagination(productsList);
-    displayCatalogo(1);
+}
+displayCatalogo(parseInt(sessionStorage.getItem("pagActual")));
+
+function setPagActual(){
+    if (isNaN((sessionStorage.getItem("pagActual")))) {
+        sessionStorage.setItem("pagActual", 1);
+    }
 }
 
 async function traerProductos() {
@@ -9,29 +16,9 @@ async function traerProductos() {
     return productsList;
 }
 
-function displayPagination(array) {
-    let paginationHTML = `
-    <li class="page-item">
-        <a class="page-link text-dark" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-        </a>
-    </li>
-    `;
-    for (let p = 0; p < (array.length / 16); p++) {
-        paginationHTML += `<li class="page-item"><a class="page-link text-dark" href="#">${p + 1}</a></li>`
-    };
-    paginationHTML += `
-    <li class="page-item">
-        <a class="page-link text-dark" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-        </a>
-    </li>
-    `;
-    document.getElementById("pagination-container").innerHTML = paginationHTML;
-}
-
 async function displayCatalogo(page) {
     productsListPagination = await (await fetch(`/api/products/pages?page=${page}&limit=16/`)).json();
+    sessionStorage.setItem("pagActual", page);
     let productsHTML = ``;
     productsListPagination.results.forEach(product => {
         productsHTML += `
@@ -50,4 +37,25 @@ async function displayCatalogo(page) {
         `;
     });
     document.getElementById("catalogo-row").innerHTML = productsHTML;
+}
+
+function displayPagination(array) {
+    let paginationHTML = `
+    <li class="page-item">
+        <a id="flecha-atras" class="page-link text-dark" href="#" aria-label="Previous" onclick="displayCatalogo(${parseInt(sessionStorage.getItem("pagActual")) - 1})">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+    </li>
+    `;
+    for (let p = 0; p < (array.length / 16); p++) {
+        paginationHTML += `<li class="page-item"><a class="page-link text-dark" href="#" onclick="displayCatalogo(${p + 1})">${p + 1}</a></li>`
+    };
+    paginationHTML += `
+    <li class="page-item">
+        <a id="flecha-adelante" class="page-link text-dark" href="#" aria-label="Next" onclick="displayCatalogo(${parseInt(sessionStorage.getItem("pagActual")) + 1})">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>
+    `;
+    document.getElementById("pagination-container").innerHTML = paginationHTML;
 }
