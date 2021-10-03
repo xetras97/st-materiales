@@ -1,10 +1,9 @@
 window.onload = async () => {
     await traerProductos();
-    document.addEventListener("DOMContentLoaded", displayPagination(productsList));
+    await document.addEventListener("DOMContentLoaded", displayPagination(productsList));
+    displayCatalogo(setPagActual());
 }
-displayCatalogo(setPagActual());
 let pages = 0;
-actualizarFlechas();
 
 function setPagActual(){
     if (sessionStorage.getItem("pagActual") >= 1) {
