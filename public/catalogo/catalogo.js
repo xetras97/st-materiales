@@ -1,10 +1,18 @@
+// EJECUCIONES AL CARGAR PAGINA
 window.onload = async () => {
     await traerProductos();
     await document.addEventListener("DOMContentLoaded", displayPagination(productsList));
     displayCatalogo(setPagActual());
 }
-let pages = 0;
 
+// DECLARACION DE VARIABLES
+let pages = 0;
+const menor = "menor";
+const mayor = "mayor";
+let productsList = 0;
+
+
+// FUNCIONES
 function setPagActual(){
     if (sessionStorage.getItem("pagActual") >= 1) {
         console.log("tiene valor");
@@ -19,8 +27,14 @@ async function traerProductos() {
     return productsList;
 }
 
-async function displayCatalogo(page) {
-    productsListPagination = await (await fetch(`/api/products/pages?page=${page}&limit=16/`)).json();
+async function displayCatalogo(page, order) {
+    document.getElementById("catalogo-row").innerHTML = `<div id="catalogo-loading" class="col mt-4">
+    <div class="d-flex justify-content-center text-info">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>`;
+    let productsListPagination = await (await fetch(`/api/products/pages?page=${page}&limit=16&order=${order}`)).json();
     sessionStorage.setItem("pagActual", page);
     let productsHTML = ``;
     productsListPagination.results.forEach(product => {
@@ -40,10 +54,10 @@ async function displayCatalogo(page) {
         `;
     });
     document.getElementById("catalogo-row").innerHTML = productsHTML;
-    actualizarFlechas();
+    actualizarFlechas(`${order}`);
 }
 
-function actualizarFlechas () {
+function actualizarFlechas (order) {
     let pagina = parseInt(sessionStorage.getItem("pagActual"));
     if ((pagina - 1) <= 0) {
         document.getElementById("flecha-atras").style.display = "none";
@@ -64,11 +78,11 @@ function actualizarFlechas () {
             itemsPaginas[i].style.backgroundColor = "#fff";
         }
     };
-    document.getElementById("flecha-atras").setAttribute("onclick", `displayCatalogo(${pagina - 1})`);
-    document.getElementById("flecha-adelante").setAttribute("onclick", `displayCatalogo(${pagina + 1})`);
+    document.getElementById("flecha-atras").setAttribute("onclick", `displayCatalogo(${pagina - 1}, "${order}")`);
+    document.getElementById("flecha-adelante").setAttribute("onclick", `displayCatalogo(${pagina + 1}, ${order})`);
 }
 
-function displayPagination(array) {
+function displayPagination(array, order) {
     let paginationHTML = `
     <li id="flecha-atras" class="page-item">
         <a  class="page-link text-dark" href="#" aria-label="Previous" >
@@ -77,7 +91,7 @@ function displayPagination(array) {
     </li>
     `;
     for (let p = 0; p < (array.length / 16); p++) {
-        paginationHTML += `<li class="page-item" onclick="displayCatalogo(${p + 1})"><a id="p-${p + 1}" class="page-link text-dark item-focus" href="#" >${p + 1}</a></li>`;
+        paginationHTML += `<li class="page-item" onclick="displayCatalogo(${p + 1}, ${order})"><a id="p-${p + 1}" class="page-link text-dark item-focus" href="#" >${p + 1}</a></li>`;
         pages += 1;
     };
     paginationHTML += `
@@ -90,3 +104,8 @@ function displayPagination(array) {
     document.getElementById("pagination-container").innerHTML = paginationHTML;
     console.log("se ejecuto");
 }
+
+function ordenarCatalogo (order) {
+    displayPagination(productsList, order);
+    displayCatalogo(1, order);
+};
