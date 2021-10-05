@@ -1,14 +1,12 @@
 // EJECUCIONES AL CARGAR PAGINA
 window.onload = async () => {
     await traerProductos();
-    await document.addEventListener("DOMContentLoaded", displayPagination(productsList));
-    displayCatalogo(setPagActual());
+    await document.addEventListener("DOMContentLoaded", displayPagination(JSON.parse(sessionStorage.getItem("productsDisplaying"))));
+    await displayCatalogo(setPagActual(), sessionStorage.getItem("order"), sessionStorage.getItem("category"));
+    cambiarTitulo(sessionStorage.getItem("category"));
 }
 
 // DECLARACION DE VARIABLES
-let pages = 0;
-let order;
-let category;
 const menor = "menor";
 const mayor = "mayor";
 const unorder = "unorder";
@@ -17,8 +15,13 @@ const funcional = "funcional";
 const yoga = "yoga";
 const barrasydiscos = "barrasydiscos";
 const promociones = "promociones";
+let pages = 0;
+let order;
+let category;
+let productsDefault;
 let productsList = 0;
-
+let categoryDisplaying;
+let orderDisplaying;
 
 // FUNCIONES
 function setPagActual(){
@@ -32,6 +35,11 @@ function setPagActual(){
 
 async function traerProductos() {
     productsList = await (await fetch("/api/products")).json();
+    if (!sessionStorage.getItem("productsDisplaying")) {
+        console.log("PASA POR ACA");
+        sessionStorage.setItem("productsDisplaying", JSON.stringify(productsList));
+    }
+    productsDefault = productsList;
     return productsList;
 }
 
@@ -63,6 +71,10 @@ async function displayCatalogo(page, order = unorder, category) {
     });
     document.getElementById("catalogo-row").innerHTML = productsHTML;
     actualizarFlechas(`${order}, ${category}`);
+    sessionStorage.setItem("category", category);
+    sessionStorage.setItem("order", order);
+    categoryDisplaying = sessionStorage.getItem("category");
+    orderDisplaying = sessionStorage.getItem("order");
 }
 
 function actualizarFlechas (order, category) {
@@ -113,13 +125,14 @@ function displayPagination(array, order = unorder, category) {
     document.getElementById("pagination-container").innerHTML = paginationHTML;
 }
 
-function ordenarCatalogo (order) {
-    displayPagination(productsList, order);
-    displayCatalogo(1, order);
+function ordenarCatalogo (order, category) {
+    displayPagination(JSON.parse(sessionStorage.getItem("productsDisplaying")), order, category);
+    displayCatalogo(1, order, category);
 };
 
 function filtrarCatalogo (category, order){
     let filtro = productsList.filter(producto => producto.category == `${category}`);
+    sessionStorage.setItem("productsDisplaying", JSON.stringify(filtro));
     displayPagination(filtro, order = unorder, category);
     displayCatalogo(1, order, category);
     cambiarTitulo(category);
@@ -129,21 +142,25 @@ function cambiarTitulo (category = "productos") {
     let listaHTML = "";
     let tituloHTML =  "";
     let pagInicio = "productos"; 
-    if (category == "productos") {
+    if (category == "productos" || category == 'null' || category == "undefined") {
         tituloHTML = "todos los productos";
         listaHTML = `<li class="breadcrumb-item"><a href="../index.html" class="text-dark">Inicio</a></li>
         <li class="breadcrumb-item active" aria-current="page">Productos</li>`
     } else if (category == "barrasydiscos") {
         tituloHTML = "barras y discos";
         listaHTML = `<li class="breadcrumb-item"><a href="../index.html" class="text-dark">Inicio</a></li>
-        <li class="breadcrumb-item" aria-current="page"><a href="#" class="text-dark" onclick="ordenarCatalogo(unorder); cambiarTitulo()">Productos</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href="#" class="text-dark" onclick="ordenarCatalogo(unorder); cambiarTitulo(); displayPagination(productsDefault, unorder); setDefault();">Productos</a></li>
         <li class="breadcrumb-item" aria-current="page">Barras y discos</li>`
     } else {
         tituloHTML = category;
         listaHTML = `<li class="breadcrumb-item"><a href="../index.html" class="text-dark">Inicio</a></li>
-        <li class="breadcrumb-item" aria-current="page"><a href="#" class="text-dark" onclick="ordenarCatalogo(unorder); cambiarTitulo()">Productos</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href="#" class="text-dark" onclick="ordenarCatalogo(unorder); cambiarTitulo(); displayPagination(productsDefault, unorder); setDefault();">Productos</a></li>
         <li class="breadcrumb-item text-capitalize" aria-current="page">${category}</li>`
     }
     document.getElementById("titulo-catalogo").innerText = tituloHTML;
     document.getElementById("lista-acumulable").innerHTML = listaHTML;
+}
+
+function setDefault(){
+    sessionStorage.setItem("productsDisplaying", JSON.stringify(productsDefault));
 }

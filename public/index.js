@@ -36,7 +36,7 @@ function displayNovedades (productsList) {
 function displayPromociones (productsList) {
   let promocionesHTML = ``;
   productsList.forEach(element => {
-    if (element.category === "Promociones") {
+    if (element.category === "promociones") {
       promocionesHTML +=
         `<div class="col-8 offset-2 col-sm-6 offset-sm-0 col-md-4">
             <a href="#">

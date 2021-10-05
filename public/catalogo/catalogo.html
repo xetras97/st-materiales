@@ -41,7 +41,7 @@
                       <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(yoga)">Yoga</a></li>
                       <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(promociones)">Promos</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#" onclick="ordenarCatalogo(unorder); cambiarTitulo()">Ver todo</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="ordenarCatalogo(unorder); cambiarTitulo(); displayPagination(productsDefault, unorder); setDefault();">Ver todo</a></li>
                     </ul>
                   </li>
                   <li class="nav-item">
@@ -76,13 +76,12 @@
                     <div class="col-12 align-baseline">
                         <nav aria-label="breadcrumb">
                             <ol id="lista-acumulable" class="breadcrumb mb-0">
-                              <li class="breadcrumb-item"><a href="../index.html" class="text-dark">Inicio</a></li>
-                              <li class="breadcrumb-item active" aria-current="page">Productos</li>
+                              <!-- SE RELLENA CON JS -->
                             </ol>
                         </nav>
                     </div>
                     <div class="col-12 mb-2 mt-2 border-top border-bottom">
-                        <h1 id="titulo-catalogo" class="text-uppercase fs-2 fst-italic mb-0">Todos los productos</h1>
+                        <h1 id="titulo-catalogo" class="text-uppercase fs-2 fst-italic mb-0"></h1>
                     </div>
                     <div class="col">
                         <div class="dropdown">
@@ -104,9 +103,9 @@
                               Ordenar
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                              <li><a href="#" class="dropdown-item" onclick="ordenarCatalogo(menor)">Precio (menor a mayor)</a></li>
+                              <li><a href="#" class="dropdown-item" onclick="ordenarCatalogo(menor, categoryDisplaying)">Precio (menor a mayor)</a></li>
                               <li><a href="#" class="dropdown-item">Novedades</a></li>
-                              <li><a href="#" class="dropdown-item" onclick="ordenarCatalogo(mayor)">Precio (mayor a menor)</a></li>
+                              <li><a href="#" class="dropdown-item" onclick="ordenarCatalogo(mayor, categoryDisplaying)">Precio (mayor a menor)</a></li>
                             </ul>
                         </div>
                     </div>
