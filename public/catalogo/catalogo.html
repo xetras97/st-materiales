@@ -35,13 +35,13 @@
                       Cátalogo
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="#">Deportes</a></li>
-                      <li><a class="dropdown-item" href="#">Funcional</a></li>
-                      <li><a class="dropdown-item" href="#">Barras y discos</a></li>
-                      <li><a class="dropdown-item" href="#">Yoga</a></li>
-                      <li><a class="dropdown-item" href="#">Promos</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(deportes)">Deportes</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(funcional)">Funcional</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(barrasydiscos)">Barras y discos</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(yoga)">Yoga</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(promociones)">Promos</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Ver todo</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="ordenarCatalogo(unorder); cambiarTitulo()">Ver todo</a></li>
                     </ul>
                   </li>
                   <li class="nav-item">
@@ -75,14 +75,14 @@
                 <div class="row">
                     <div class="col-12 align-baseline">
                         <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb mb-0">
+                            <ol id="lista-acumulable" class="breadcrumb mb-0">
                               <li class="breadcrumb-item"><a href="../index.html" class="text-dark">Inicio</a></li>
                               <li class="breadcrumb-item active" aria-current="page">Productos</li>
                             </ol>
                         </nav>
                     </div>
                     <div class="col-12 mb-2 mt-2 border-top border-bottom">
-                        <h1 class="text-uppercase fs-2 fst-italic mb-0">Todos los productos</h1>
+                        <h1 id="titulo-catalogo" class="text-uppercase fs-2 fst-italic mb-0">Todos los productos</h1>
                     </div>
                     <div class="col">
                         <div class="dropdown">
@@ -90,11 +90,11 @@
                               Categorias
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                              <li><a href="#" class="dropdown-item">Deportes</a></li>
-                              <li><a href="#" class="dropdown-item">Funcional</a></li>
-                              <li><a href="#" class="dropdown-item">Yoga</a></li>
-                              <li><a href="#" class="dropdown-item">Barras y discos</a></li>
-                              <li><a href="#" class="dropdown-item">Promociones</a></li>
+                              <li><a href="#" class="dropdown-item" onclick="filtrarCatalogo(deportes)">Deportes</a></li>
+                              <li><a href="#" class="dropdown-item" onclick="filtrarCatalogo(funcional)">Funcional</a></li>
+                              <li><a href="#" class="dropdown-item" onclick="filtrarCatalogo(yoga)">Yoga</a></li>
+                              <li><a href="#" class="dropdown-item" onclick="filtrarCatalogo(barrasydiscos)">Barras y discos</a></li>
+                              <li><a href="#" class="dropdown-item" onclick="filtrarCatalogo(promociones)">Promociones</a></li>
                             </ul>
                         </div>
                     </div>

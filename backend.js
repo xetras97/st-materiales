@@ -3,7 +3,7 @@ const repository = require("./repository");
 const app = express();
 const port = 3000;
 
-app.get('/api/products', requestProducts(), (req, res) => {
+app.get('/api/products', requestProducts("deportes"), (req, res) => {
   res.json(res.products);
 });
 
@@ -15,22 +15,43 @@ app.get('/api/products/pages', async (req, res, next) => {
   const page = parseInt(req.query.page);
   const limit = parseInt(req.query.limit);
   const order = req.query.order;
+  const category = req.query.category;
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
+  let products = res.products;
 
   const resultProducts = {};
+  //NO FUNCIONA PORQUE GENERA OTRO ARRAY
+  if (category == "deportes") {
+    products = products.filter(producto => producto.category == "deportes");
+  }
+  if (category == "funcional") {
+    products = products.filter(producto => producto.category == "funcional");
+  }
+  if (category == "yoga") {
+    products = products.filter(producto => producto.category == "yoga");
+  }
+  if (category == "barrasydiscos") {
+    products = products.filter(producto => producto.category == "barrasydiscos");
+  }
+  if (category == "promociones") {
+    products = products.filter(producto => producto.category == "promociones");
+  }
   if (order === "menor") {
-    res.products.sort(((a, b) => a.price - b.price));
+    products.sort(((a, b) => a.price - b.price));
   } 
   if (order === "mayor") {
-    res.products.sort(((a, b) => b.price - a.price));
+    products.sort(((a, b) => b.price - a.price));
   }
-  if (endIndex < res.products.length && startIndex > 0) {
+  if (order === "unorder") {
+    products = products;
+  }
+  if (endIndex < products.length && startIndex > 0) {
     resultProducts.info = {
       next: `/api/products/pages?page=${page + 1}&limit=${limit}&order=${order}/`,
       prev: `/api/products/pages?page=${page - 1}&limit=${limit}&order=${order}/`,
     };
-  } else if (endIndex < res.products.length) {
+  } else if (endIndex < products.length) {
     resultProducts.info = {
       next: `/api/products/pages?page=${page + 1}&limit=${limit}&order=${order}/`,
       prev: "",
@@ -41,7 +62,7 @@ app.get('/api/products/pages', async (req, res, next) => {
       prev: `/api/products/pages?page=${page - 1}&limit=${limit}&order=${order}/`,
     };
   }
-  resultProducts.results = res.products.slice(startIndex, endIndex);
+  resultProducts.results = products.slice(startIndex, endIndex);
   
   res.paginatedResults = resultProducts;
   next()
@@ -55,15 +76,9 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-function requestProducts(orden) {
+function requestProducts() {
   return async (req, res, next) => {
     let products = await repository.read();
-    if (orden === "menor") {
-      products.sort(((a, b) => a.price - b.price));
-    } 
-    if (orden === "mayor") {
-      products.sort(((a, b) => b.price - a.price));
-    }
     res.products = products;
     next()
   }

@@ -7,8 +7,16 @@ window.onload = async () => {
 
 // DECLARACION DE VARIABLES
 let pages = 0;
+let order;
+let category;
 const menor = "menor";
 const mayor = "mayor";
+const unorder = "unorder";
+const deportes = "deportes";
+const funcional = "funcional";
+const yoga = "yoga";
+const barrasydiscos = "barrasydiscos";
+const promociones = "promociones";
 let productsList = 0;
 
 
@@ -27,14 +35,14 @@ async function traerProductos() {
     return productsList;
 }
 
-async function displayCatalogo(page, order) {
+async function displayCatalogo(page, order = unorder, category) {
     document.getElementById("catalogo-row").innerHTML = `<div id="catalogo-loading" class="col mt-4">
     <div class="d-flex justify-content-center text-info">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>`;
-    let productsListPagination = await (await fetch(`/api/products/pages?page=${page}&limit=16&order=${order}`)).json();
+    let productsListPagination = await (await fetch(`/api/products/pages?page=${page}&limit=16&order=${order}&category=${category}`)).json();
     sessionStorage.setItem("pagActual", page);
     let productsHTML = ``;
     productsListPagination.results.forEach(product => {
@@ -54,10 +62,10 @@ async function displayCatalogo(page, order) {
         `;
     });
     document.getElementById("catalogo-row").innerHTML = productsHTML;
-    actualizarFlechas(`${order}`);
+    actualizarFlechas(`${order}, ${category}`);
 }
 
-function actualizarFlechas (order) {
+function actualizarFlechas (order, category) {
     let pagina = parseInt(sessionStorage.getItem("pagActual"));
     if ((pagina - 1) <= 0) {
         document.getElementById("flecha-atras").style.display = "none";
@@ -78,11 +86,12 @@ function actualizarFlechas (order) {
             itemsPaginas[i].style.backgroundColor = "#fff";
         }
     };
-    document.getElementById("flecha-atras").setAttribute("onclick", `displayCatalogo(${pagina - 1}, "${order}")`);
-    document.getElementById("flecha-adelante").setAttribute("onclick", `displayCatalogo(${pagina + 1}, ${order})`);
+    document.getElementById("flecha-atras").setAttribute("onclick", `displayCatalogo(${pagina - 1}, ${order}, ${category})`);
+    document.getElementById("flecha-adelante").setAttribute("onclick", `displayCatalogo(${pagina + 1}, ${order}, ${category})`);
 }
 
-function displayPagination(array, order) {
+function displayPagination(array, order = unorder, category) {
+    pages = 0;
     let paginationHTML = `
     <li id="flecha-atras" class="page-item">
         <a  class="page-link text-dark" href="#" aria-label="Previous" >
@@ -91,7 +100,7 @@ function displayPagination(array, order) {
     </li>
     `;
     for (let p = 0; p < (array.length / 16); p++) {
-        paginationHTML += `<li class="page-item" onclick="displayCatalogo(${p + 1}, ${order})"><a id="p-${p + 1}" class="page-link text-dark item-focus" href="#" >${p + 1}</a></li>`;
+        paginationHTML += `<li class="page-item" onclick="displayCatalogo(${p + 1}, ${order}, ${category})"><a id="p-${p + 1}" class="page-link text-dark item-focus" href="#" >${p + 1}</a></li>`;
         pages += 1;
     };
     paginationHTML += `
@@ -102,10 +111,39 @@ function displayPagination(array, order) {
     </li>
     `;
     document.getElementById("pagination-container").innerHTML = paginationHTML;
-    console.log("se ejecuto");
 }
 
 function ordenarCatalogo (order) {
     displayPagination(productsList, order);
     displayCatalogo(1, order);
 };
+
+function filtrarCatalogo (category, order){
+    let filtro = productsList.filter(producto => producto.category == `${category}`);
+    displayPagination(filtro, order = unorder, category);
+    displayCatalogo(1, order, category);
+    cambiarTitulo(category);
+}
+
+function cambiarTitulo (category = "productos") {
+    let listaHTML = "";
+    let tituloHTML =  "";
+    let pagInicio = "productos"; 
+    if (category == "productos") {
+        tituloHTML = "todos los productos";
+        listaHTML = `<li class="breadcrumb-item"><a href="../index.html" class="text-dark">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Productos</li>`
+    } else if (category == "barrasydiscos") {
+        tituloHTML = "barras y discos";
+        listaHTML = `<li class="breadcrumb-item"><a href="../index.html" class="text-dark">Inicio</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href="#" class="text-dark" onclick="ordenarCatalogo(unorder); cambiarTitulo()">Productos</a></li>
+        <li class="breadcrumb-item" aria-current="page">Barras y discos</li>`
+    } else {
+        tituloHTML = category;
+        listaHTML = `<li class="breadcrumb-item"><a href="../index.html" class="text-dark">Inicio</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href="#" class="text-dark" onclick="ordenarCatalogo(unorder); cambiarTitulo()">Productos</a></li>
+        <li class="breadcrumb-item text-capitalize" aria-current="page">${category}</li>`
+    }
+    document.getElementById("titulo-catalogo").innerText = tituloHTML;
+    document.getElementById("lista-acumulable").innerHTML = listaHTML;
+}
