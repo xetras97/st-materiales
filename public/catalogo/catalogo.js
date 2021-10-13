@@ -24,9 +24,8 @@ let categoryDisplaying;
 let orderDisplaying;
 
 // FUNCIONES
-function setPagActual(){
+function setPagActual() {
     if (sessionStorage.getItem("pagActual") >= 1) {
-        console.log("tiene valor");
     } else {
         sessionStorage.setItem("pagActual", 1);
     }
@@ -36,7 +35,6 @@ function setPagActual(){
 async function traerProductos() {
     productsList = await (await fetch("/api/products")).json();
     if (!sessionStorage.getItem("productsDisplaying")) {
-        console.log("PASA POR ACA");
         sessionStorage.setItem("productsDisplaying", JSON.stringify(productsList));
     }
     productsDefault = productsList;
@@ -77,7 +75,7 @@ async function displayCatalogo(page, order = unorder, category) {
     orderDisplaying = sessionStorage.getItem("order");
 }
 
-function actualizarFlechas (order, category) {
+function actualizarFlechas(order, category) {
     let pagina = parseInt(sessionStorage.getItem("pagActual"));
     if ((pagina - 1) <= 0) {
         document.getElementById("flecha-atras").style.display = "none";
@@ -91,7 +89,7 @@ function actualizarFlechas (order, category) {
     };
 
     let itemsPaginas = document.getElementsByClassName("page-link");
-    for (i = 0; i < itemsPaginas.length; i++){
+    for (i = 0; i < itemsPaginas.length; i++) {
         if (itemsPaginas[i].innerText == sessionStorage.getItem("pagActual")) {
             itemsPaginas[i].style.backgroundColor = "var(--celeste-color)";
         } else {
@@ -125,23 +123,25 @@ function displayPagination(array, order = unorder, category) {
     document.getElementById("pagination-container").innerHTML = paginationHTML;
 }
 
-function ordenarCatalogo (order, category) {
+function ordenarCatalogo(order, category) {
     displayPagination(JSON.parse(sessionStorage.getItem("productsDisplaying")), order, category);
     displayCatalogo(1, order, category);
+    agregarEtiqueta(order);
 };
 
-function filtrarCatalogo (category, order){
+function filtrarCatalogo(category, order) {
     let filtro = productsList.filter(producto => producto.category == `${category}`);
     sessionStorage.setItem("productsDisplaying", JSON.stringify(filtro));
     displayPagination(filtro, order = unorder, category);
     displayCatalogo(1, order, category);
     cambiarTitulo(category);
+    agregarEtiqueta(order);
 }
 
-function cambiarTitulo (category = "productos") {
+function cambiarTitulo(category = "productos") {
     let listaHTML = "";
-    let tituloHTML =  "";
-    let pagInicio = "productos"; 
+    let tituloHTML = "";
+    let pagInicio = "productos";
     if (category == "productos" || category == 'null' || category == "undefined") {
         tituloHTML = "todos los productos";
         listaHTML = `<li class="breadcrumb-item"><a href="../index.html" class="text-dark">Inicio</a></li>
@@ -161,6 +161,28 @@ function cambiarTitulo (category = "productos") {
     document.getElementById("lista-acumulable").innerHTML = listaHTML;
 }
 
-function setDefault(){
+function setDefault() {
     sessionStorage.setItem("productsDisplaying", JSON.stringify(productsDefault));
+}
+
+function agregarEtiqueta(order) {
+    let texto = "";
+    if (order == "menor") {
+        texto = "Precio: menor a mayor"
+    }
+    if (order == "mayor") {
+        texto = "Precio: mayor a menor"
+    }
+    document.getElementById("etiquetas-container").innerHTML = `
+    <div id="etiquetas" class="text-dark">
+        <span>${texto}</span>
+        <button type="button" class="btn-close" aria-label="Close" onclick="ordenarCatalogo(unorder, categoryDisplaying)"></button>
+    </div>
+    `
+    if (order == unorder) {
+        document.getElementById("etiquetas-container").innerHTML = ""
+    }
+}
+function eliminarEtiqueta() {
+    document.getElementById("etiquetas-container").innerHTML = "";
 }

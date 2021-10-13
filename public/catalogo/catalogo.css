@@ -32,3 +32,27 @@
     transition: opacity 0.35s;
     opacity: 0.8;
 }
+
+#etiquetas-container{
+    margin-top: 5px;
+    display: flex;
+    margin-right: 2px;
+}
+
+#etiquetas {
+    display: flex;
+    width: fit-content;
+    max-width: 250px;
+    margin-right: 5px;
+    align-items: center;
+    padding: 2px 4px;
+    background-color: #d1d1d1;
+    border: 1px solid var(--negro-color);
+    font-size: 0.8rem;
+}
+
+#etiquetas button {
+    margin-left: 3px;
+    width: 4px;
+    height: 4px;
+}

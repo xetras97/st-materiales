@@ -1,0 +1,41 @@
+:root {
+    --naranja-color: #EF8B57;
+    --negro-color: #0F0F0F;
+    --celeste-color:#4bb1dc;
+    --gris-color: #828384;
+}
+
+.product-image {
+    height: 75vh;
+    width: 100%;
+    object-fit: cover;
+}
+
+.price {
+    color: var(--negro-color);
+    text-shadow: 0px 0px 3px var(--naranja-color);
+}
+
+.item-id {
+    font-size: 0.9rem;
+}
+
+.stock {
+    color: #ff0000;
+}
+
+.btn-st {
+    height: 100%;
+    width: 95%;
+    background-color: var(--naranja-color);
+}
+
+.btn-st:hover{
+    background-color: #d47747;
+}
+
+.like {
+    text-decoration: none;
+    color: var(--celeste-color);
+    padding-top: 4px;
+}
