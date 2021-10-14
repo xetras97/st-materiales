@@ -6,7 +6,8 @@
 }
 
 .product-image {
-    height: 75vh;
+    height: 560px;
+    max-height: 75vh;
     width: 100%;
     object-fit: cover;
 }
@@ -38,4 +39,22 @@
     text-decoration: none;
     color: var(--celeste-color);
     padding-top: 4px;
+}
+
+.calculate {
+    font-size: 0.8rem;
+    color: var(--celeste-color);
+    cursor: pointer;
+}
+
+.calculate:hover {
+    color: var(--celeste-color);
+}
+
+.retiro p b {
+    color: var(--naranja-color);
+}
+
+i {
+    color: var(--naranja-color);
 }
