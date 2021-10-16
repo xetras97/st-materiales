@@ -58,3 +58,8 @@
 i {
     color: var(--naranja-color);
 }
+
+#novedades-container .card .img-fluid:hover {
+    transition: none;
+    height: 170px;
+}

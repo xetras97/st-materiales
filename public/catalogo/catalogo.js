@@ -54,7 +54,7 @@ async function displayCatalogo(page, order = unorder, category) {
     productsListPagination.results.forEach(product => {
         productsHTML += `
         <div class="col-12 col-md-4 col-lg-3 mt-2 card-container">
-            <a href="#" class="text-dark" style="text-decoration: none;">
+            <a href="./${product.id}" class="text-dark" style="text-decoration: none;">
                 <div class="card h-100">
                     <img src="../${product.image}" class="img-fluid card-img-top" alt="${product.name}">
                     <div class="card-body">

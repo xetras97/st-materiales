@@ -3,7 +3,7 @@ const repository = require("./repository");
 const app = express();
 const port = 3000;
 
-app.get('/api/products', requestProducts("deportes"), (req, res) => {
+app.get('/api/products', requestProducts(), (req, res) => {
   res.json(res.products);
 });
 
@@ -116,3 +116,26 @@ function pagination(model) {
   }
 }
 
+var path = require('path');
+// app.get('/catalogo/hola', (req, res) => {
+//   res.sendFile(path.join(__dirname, "public/catalogo/producto.html"));
+// });
+
+app.get('/catalogo/:name', (req, res) => {
+  res.sendFile(path.join(__dirname, "public/catalogo/producto.html"));
+});
+
+// var fs = require('fs');
+
+// // Change the content of the file as you want
+// // or either set fileContent to null to create an empty file
+// var fileContent = "Hello World!";
+
+// // The absolute path of the new file with its name
+// var filepath = "public/mynewfile.html";
+
+// fs.writeFile(filepath, fileContent, (err) => {
+//     if (err) throw err;
+
+//     console.log("The file was succesfully saved!");
+// }); 
