@@ -79,5 +79,3 @@ module.exports = {
     read,
     write,
 };
-
-readAndWrite();
