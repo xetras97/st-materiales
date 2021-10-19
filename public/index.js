@@ -16,7 +16,7 @@ function displayNovedades (productsList) {
     if (element.new === "Novedad") {
       productsHTML +=
         `<div class="col-6 col-md-4 col-lg-3 mt-2 card-container">
-          <a href="#" class="text-dark" style="text-decoration: none;">
+          <a href="./catalogo/${element.id}" class="text-dark" style="text-decoration: none;">
             <div class="card h-100">
               <img src="${element.image}" class="img-fluid card-img-top" alt="${element.name}">
                 <div class="card-body">
@@ -39,7 +39,7 @@ function displayPromociones (productsList) {
     if (element.category === "promociones") {
       promocionesHTML +=
         `<div class="col-8 offset-2 col-sm-6 offset-sm-0 col-md-4">
-            <a href="#">
+            <a href="./catalogo/${element.id}">
               <div class="card bg-dark text-white">
                 <img src="${element.image}" class="card-img" alt="${element.name}">
                 <div class="card-img-overlay d-flex flex-column justify-content-end">

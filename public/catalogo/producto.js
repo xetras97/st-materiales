@@ -88,6 +88,7 @@ function displayItem(item) {
     `
     document.getElementById("productDisplay").innerHTML = htmlProduct;
     document.getElementById("productDetails").innerHTML = htmlDetails;
+    document.getElementById("title-name").innerText += ` - ${item.name}`;
 
     if (item.stock <= 5) {
         document.getElementById("stock-count").classList.remove("d-none");
@@ -104,7 +105,7 @@ async function displayRelated (item) {
         if (element.category == item.category) {
             relatedHtml += `
             <div class="col-6 col-md-4 col-lg-3 mt-2 card-container">
-                <a href="#" class="text-dark" style="text-decoration: none;">
+                <a href="./${element.id}" class="text-dark" style="text-decoration: none;">
                     <div class="card h-100">
                         <img src="../${element.image}" class="img-fluid card-img-top"
                             alt="${element.name}">

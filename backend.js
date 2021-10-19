@@ -121,8 +121,14 @@ var path = require('path');
 //   res.sendFile(path.join(__dirname, "public/catalogo/producto.html"));
 // });
 
-app.get('/catalogo/:name', (req, res) => {
-  res.sendFile(path.join(__dirname, "public/catalogo/producto.html"));
+app.get('/catalogo/:name', requestProducts(), (req, res) => {
+  let products = res.products
+  let param = req.params.name
+  if (products.some(element => element.id == param)) {
+    res.sendFile(path.join(__dirname, "public/catalogo/producto.html"));
+  } else {
+    res.sendFile(path.join(__dirname, "public/notfound.html"));
+  }
 });
 
 // var fs = require('fs');
