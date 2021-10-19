@@ -1,22 +1,34 @@
 const { google } = require('googleapis');
-const token = require("./token.json");
-const credentials = require("./credentials.json");
+// const token = require("./token.json");
+// const credentials = require("./credentials.json");
 
+
+// const oAuth2Client = new google.auth.OAuth2(
+//     credentials.installed.client_id,
+//     credentials.installed.client_secret,
+//     credentials.installed.redirect_uris[0],
+// );
+
+// oAuth2Client.setCredentials({
+//     acces_token: token.access_token,
+//     refresh_token: token.refresh_token,
+//     scope: token.scope,
+//     token_type: token.toke_type,
+//     expiry_date: token.expiry_date,
+// });
 
 const oAuth2Client = new google.auth.OAuth2(
-    credentials.installed.client_id,
-    credentials.installed.client_secret,
-    credentials.installed.redirect_uris[0],
+    process.env.CLIENTID,
+    process.env.CLIENTSECRET,
+    process.env.REDIRECTURIS,
 );
-
 oAuth2Client.setCredentials({
-    acces_token: token.access_token,
-    refresh_token: token.refresh_token,
-    scope: token.scope,
-    token_type: token.toke_type,
-    expiry_date: token.expiry_date,
+    acces_token: process.env.ACCESSTOKEN,
+    refresh_token: process.env.REFRESHTOKEN,
+    scope: process.env.SCOPE,
+    token_type: process.env.TOKENTYPE,
+    expiry_date: process.env.EXPIRYDATE,
 });
-
 
 const sheets = google.sheets({ version: 'v4', auth: oAuth2Client });
 
