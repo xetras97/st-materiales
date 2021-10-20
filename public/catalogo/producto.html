@@ -192,16 +192,19 @@
         <div class="modal-body">
           <form class="form-floating d-flex">
             <div class="col-4 form-floating">
-              <input type="number" min="1" max="10" class="form-control text-center" id="floatingInputValue"
-                placeholder="Codigo Postal">
-              <label for="floatingInputValue">Código Postal</label>
+              <input type="text" list="localidades" class="form-control text-center" id="floatingInputValue"
+                placeholder="Localidad">
+              <label for="floatingInputValue">Localidad</label>
+              <datalist id="localidades">
+                <!-- SE LLENA CON JS -->
+              </datalist>
             </div>
             <div class="col-8 text-center">
-              <button class="btn btn-st text-uppercase text-dark fw-bold" type="submit">Calcular</button>
+              <button class="btn btn-st text-uppercase text-dark fw-bold" type="button" onclick="calcularEnvio()">Calcular</button>
             </div>
           </form>
-          <p class="mt-4 mb-0 text-center text-uppercase text-decoration-underline fw-bold">Costo de envio</p>
-          <p class="mb-0 text-center">$500</p>
+          <p id="title-envio" class="mt-4 mb-0 text-center text-uppercase text-decoration-underline fw-bold d-none">Costo de envio</p>
+          <p id="price-envio" class="mb-0 text-center fs-3"></p>
         </div>
       </div>
     </div>

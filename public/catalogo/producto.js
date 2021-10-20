@@ -2,11 +2,13 @@ window.onload = async () => {
     await traerItem(url);
     await document.addEventListener("DOMContentLoaded", displayItem(item));
     displayRelated(item);
+    traerLocalidades();
 }
 
 // Variables //
 const url = window.location.pathname.slice(10).replace(/%20/g, " ");
 const contenedorNovedades = document.getElementById("novedades-container");
+const inputLocalidad = document.getElementById("floatingInputValue");
 let item = "";
 
 async function traerItem(itemId) {
@@ -14,6 +16,17 @@ async function traerItem(itemId) {
     item = productsList.find(element => element.id == itemId);
     return item;
 };
+
+async function traerLocalidades() {
+    let localidades = await (await fetch("/api/envios")).json();
+    let localidadesHtml = "";
+    localidades.forEach(element => {
+        localidadesHtml += `
+        <option value="${element.name}">
+        `
+    });
+    document.getElementById("localidades").innerHTML = localidadesHtml;
+}
 
 function displayItem(item) {
     let htmlProduct = `
@@ -120,6 +133,20 @@ async function displayRelated (item) {
         };
     });
     document.getElementById("novedades-container").innerHTML += relatedHtml;
+};
+
+async function calcularEnvio() {
+    let localidades = await (await fetch("/api/envios")).json();
+    let html = "";
+    if (localidades.some(elem => elem.name == inputLocalidad.value)) {
+        let localidad = localidades.find(element => element.name == inputLocalidad.value);
+        document.getElementById("title-envio").classList.remove("d-none");
+        document.getElementById("price-envio").innerText = `$${localidad.price}`;
+    } else {
+        document.getElementById("title-envio").classList.remove("d-none");
+        document.getElementById("price-envio").innerText = `El envio a ${inputLocalidad.value} debe ser coordinado via WhatsApp al finalizar la compra`;
+        document.getElementById("price-envio").classList.remove("fs-3");
+    }
 };
 
 function desplazarDerecha(contenedor) {

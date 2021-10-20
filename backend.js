@@ -7,6 +7,11 @@ app.get('/api/products', requestProducts(), (req, res) => {
   res.json(res.products);
 });
 
+app.get('/api/envios', async (req, res) => {
+  let localidades = await repository.readEnvios()
+  res.json(localidades);
+});
+
 app.get('/api/products/pages', async (req, res, next) => {
   let products = await repository.read();
   res.products = products;

@@ -53,6 +53,21 @@ async function read() {
     return products;
 };
 
+async function readEnvios() {
+    const response = await sheets.spreadsheets.values.get({
+        spreadsheetId: '16nrQ187NJdcRmuq8oquMkLGoHpoXqWyEpkFcLbRgLZU',
+        range: 'Envios!A2:H',
+    });
+
+    const rows = response.data.values;
+    const localidades = rows.map((row) => ({
+        name: row[0],
+        price: +row[1],
+    }));
+
+    return localidades;
+};
+
 async function write(products) {
     let values = products.map(p => [p.id, p.name, p.price, p.category, p.stock, p.image, p.description, p.new])
 
@@ -77,5 +92,6 @@ async function readAndWrite() {
 
 module.exports = {
     read,
+    readEnvios,
     write,
 };
