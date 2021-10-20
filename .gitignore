@@ -1,5 +1,4 @@
 *.jpg
-assets/
 node_modules/
 token.json
 credentials.json
