@@ -10,9 +10,8 @@
     integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
   <link rel="shortcut icon" href="../assets/logos/st-logo-zoomed.png" />
-  <title>Catálogo - ST Materiales</title>
-  <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="catalogo.css">
+  <title id="title-name">ST - Checkout</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
@@ -33,16 +32,20 @@
               <a class="nav-link" aria-current="page" href="../index.html">Inicio</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle active" href="#products-preview-2" id="navbarDropdown" role="button"
+              <a class="nav-link dropdown-toggle" href="#products-preview-2" id="navbarDropdown" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 Cátalogo
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(deportes)">Deportes</a></li>
-                <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(funcional)">Funcional</a></li>
-                <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(barrasydiscos)">Barras y discos</a></li>
+                <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(deportes)">Deportes</a>
+                </li>
+                <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(funcional)">Funcional</a>
+                </li>
+                <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(barrasydiscos)">Barras y
+                    discos</a></li>
                 <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(yoga)">Yoga</a></li>
-                <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(promociones)">Promos</a></li>
+                <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(promociones)">Promos</a>
+                </li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
@@ -58,13 +61,14 @@
               <a class="nav-link" aria-current="page" href="#footer">Contacto</a>
             </li>
             <li class="nav-item pe-2">
-              <a id="btn-carrito" class="nav-link" href="#" role="button">
+              <a id="btn-carrito" class="nav-link active" href="#" role="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart2"
                   viewBox="0 0 16 16">
                   <path
                     d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                 </svg>
-                <span id="etiqueta-carrito" class="d-none position-absolute top-80 start-80 translate-middle badge rounded-pill bg-danger">
+                <span id="etiqueta-carrito"
+                  class="d-none position-absolute top-80 start-80 translate-middle badge rounded-pill bg-danger">
                   <!-- SE LLENA CON JS -->
                   <span class="visually-hidden">Productos en carrito</span>
                 </span>
@@ -77,75 +81,48 @@
   </header>
 
   <main>
-    <section id="catalgo-info">
-      <div class="container mt-4">
-        <div class="row">
-          <div class="col-12 align-baseline">
-            <nav aria-label="breadcrumb">
-              <ol id="lista-acumulable" class="breadcrumb mb-0">
-                <!-- SE RELLENA CON JS -->
-              </ol>
-            </nav>
-          </div>
-          <div class="col-12 mb-2 mt-2 border-top border-bottom">
-            <h1 id="titulo-catalogo" class="text-uppercase fs-2 fst-italic mb-0"></h1>
-          </div>
-          <div class="col">
-            <div class="dropdown">
-              <button class="btn btn-outline btn-sm dropdown-toggle text-uppercase" type="button" id="dropdownMenu2"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                Categorias
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <li><a href="#" class="dropdown-item" onclick="filtrarCatalogo(deportes)">Deportes</a></li>
-                <li><a href="#" class="dropdown-item" onclick="filtrarCatalogo(funcional)">Funcional</a></li>
-                <li><a href="#" class="dropdown-item" onclick="filtrarCatalogo(yoga)">Yoga</a></li>
-                <li><a href="#" class="dropdown-item" onclick="filtrarCatalogo(barrasydiscos)">Barras y discos</a></li>
-                <li><a href="#" class="dropdown-item" onclick="filtrarCatalogo(promociones)">Promociones</a></li>
-              </ul>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="mt-2 text-uppercase border-top border-bottom fst-italic">Carrito </h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8">
+          <div class="col-10 card mb-3 mt-3" style="">
+            <div class="row g-0">
+              <div class="col-4">
+                <img src="https://i.ibb.co/b2vnbSt/192f239f-aadf-45bb-9eb5-afd22059ab31.jpg" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h5 class="card-title">Nombre del producto</h5>
+                  <p class="card-text">$5320</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="col text-end">
-            <div class="dropdown">
-              <button class="btn btn-outline btn-sm dropdown-toggle text-uppercase" type="button" id="dropdownMenu2"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                Ordenar
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <li><a href="#" class="dropdown-item" onclick="ordenarCatalogo(menor, categoryDisplaying)">Precio (menor
-                    a mayor)</a></li>
-                <li><a href="#" class="dropdown-item">Novedades</a></li>
-                <li><a href="#" class="dropdown-item" onclick="ordenarCatalogo(mayor, categoryDisplaying)">Precio (mayor
-                    a menor)</a></li>
-              </ul>
+          <div class="col-10 card mb-3 mt-3" style="">
+            <div class="row g-0">
+              <div class="col-4">
+                <img src="https://i.ibb.co/s5PYYwx/IMG-9751.jpg" alt="..." style="max-width: 250px; object-fit: cover;">
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h5 class="card-title">Nombre del producto</h5>
+                  <p class="card-text">$5320</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div id="etiquetas-container">
-          <!-- SE RELLENA CON JS -->
+        <div class="col-4">
+          CHAU
         </div>
       </div>
-    </section>
-
-    <section id="catalogo-display">
-      <div class="container">
-        <div id="catalogo-row" class="row">
-          <!-- SE RELLENA CON EL JS -->
-        </div>
-      </div>
-      </div>
-      <div class="container mt-4">
-        <div class="row">
-          <div class="col-12">
-            <nav aria-label="Navegacion Productos">
-              <ul id="pagination-container" class="pagination justify-content-center">
-                <!-- SE RELLENA CON EL JS -->
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
   </main>
 
   <footer id="footer">
@@ -181,12 +158,8 @@
     </div>
   </footer>
 
-  <!--Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-    crossorigin="anonymous"></script>
-  <script src="./catalogo.js"></script>
-  <script src="../carrito.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  <script src="./carrito.js"></script>
 </body>
 
 </html>

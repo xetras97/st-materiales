@@ -58,7 +58,7 @@ function displayItem(item) {
                 <label for="floatingInputValue">Cant</label>
             </div>
             <div class="col-9 text-center">
-                <button class="btn btn-st text-uppercase text-dark fw-bold" type="submit">Agregar al
+                <button class="btn btn-st text-uppercase text-dark fw-bold" type="button" onclick="agregarAlCarrito(), notificacion()">Agregar al
                     carrito</button>
             </div>
             <a href="#" class="like col-1 text-center"><i class="bi bi-star fs-2"></i></a>
@@ -102,6 +102,7 @@ function displayItem(item) {
     document.getElementById("productDisplay").innerHTML = htmlProduct;
     document.getElementById("productDetails").innerHTML = htmlDetails;
     document.getElementById("title-name").innerText += ` - ${item.name}`;
+    document.getElementById("toast-body"). innerHTML = `Agregaste <b>${item.name}</b> al carrito`;
 
     if (item.stock <= 5) {
         document.getElementById("stock-count").classList.remove("d-none");
