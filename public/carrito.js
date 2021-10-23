@@ -54,6 +54,29 @@ function displayEtiquetaCarrito() {
     }
 }
 
+function displaySelectorEntrega() {
+    document.getElementById("checks").classList.remove("d-none");
+    document.getElementById("checks").classList.add("d-flex");
+};
+
+const checkboxEnvio = document.getElementById('envio-check');
+const checkboxRetiro = document.getElementById('checkbox');
+
+checkboxEnvio.addEventListener("change", displayEnvioInput, false);
+
+function displayEnvioInput(){
+    const inputEnvio = document.getElementById("input-envio");
+  if(checkboxEnvio.checked){
+      inputEnvio.classList.remove("d-none");
+      inputEnvio.classList.add("d-flex");
+    } else {
+        if (inputEnvio.classList.contains("d-flex")) {
+            inputEnvio.classList.remove("d-flex");
+            inputEnvio.classList.add("d-none");
+        }
+    }
+}
+
 
 // INICIADOR DE TOOLTIPS //
 const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
