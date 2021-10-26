@@ -43,7 +43,7 @@ function displayItem(item) {
     <div class="col-12 col-md-7">
         <h2 class="d-block d-md-none mt-2 text-uppercase text-center border-top border-bottom fst-italic">
             ${item.name}</h2>
-        <img src="../${item.image}" class="product-image img-fluid img-thumbnail" alt="${item.name}">
+        <img src="${item.image}" class="product-image img-fluid img-thumbnail" alt="${item.name}">
     </div>
     <div class="col-12 col-md-5 mt-md-4">
         <h2 class="d-none d-md-block text-uppercase text-md-start border-top border-bottom fst-italic">
@@ -121,7 +121,7 @@ async function displayRelated (item) {
             <div class="col-6 col-md-4 col-lg-3 mt-2 card-container">
                 <a href="./${element.id}" class="text-dark" style="text-decoration: none;">
                     <div class="card h-100">
-                        <img src="../${element.image}" class="img-fluid card-img-top"
+                        <img src="${element.image}" class="img-fluid card-img-top"
                             alt="${element.name}">
                         <div class="card-body">
                             <span class="badge text-dark badge-price">$${element.price}</span>
