@@ -38,21 +38,13 @@
                 Cátalogo
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(deportes)">Deportes</a>
-                </li>
-                <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(funcional)">Funcional</a>
-                </li>
-                <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(barrasydiscos)">Barras y
-                    discos</a></li>
-                <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(yoga)">Yoga</a></li>
-                <li><a class="dropdown-item" href="#" onclick="filtrarCatalogo(promociones)">Promos</a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#"
-                    onclick="ordenarCatalogo(unorder); cambiarTitulo(); displayPagination(productsDefault, unorder); setDefault();">Ver
-                    todo</a></li>
+                <li><a class="dropdown-item" href="#" onclick="actualizarCategory(`deportes`)">Deportes</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="actualizarCategory(`funcional`)">Funcional</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="actualizarCategory(`barrasydiscos`)">Barras y discos</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="actualizarCategory(`yoga`)">Yoga</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="actualizarCategory(`promociones`)">Promos</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="./catalogo/catalogo.html" onclick="eliminarCategory()">Ver todo</a></li>
               </ul>
             </li>
             <li class="nav-item">
@@ -147,6 +139,14 @@
                 <h6 id="carrito-total" class="card-text text-muted fw-bold fs-4">$</h6>
               </div>
             </div>
+          </div>
+
+          <div class="col-8 offset-2 mt-3">
+            <button id="btn-gradient" type="button" class="btn text-uppercase fw-bold" style="width: 100%;">
+              <i class="bi bi-caret-left-fill"></i>
+              Ir a pagar
+              <i class="bi bi-caret-right-fill"></i>
+            </button>
           </div>
         </div>
       </div>

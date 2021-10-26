@@ -8,6 +8,7 @@ if (window.addEventListener) {
 } else {
     window.attachEvent("onload", displayCarritoItems);
 };
+
 let subtotal = 0;
 let total = 0;
 function displayCarritoItems (){
@@ -25,8 +26,8 @@ function displayCarritoItems (){
                     <h5 class="card-title mb-2">${element.name}</h5>
                     <p class="price card-text fs-4 fw-bold mb-2">$${element.price}</p>
                     <p class="card-text mb-0"><small class="text-muted">Item ID: ${element.id}</small></p>
-                    <button type="button" class="btn-close" aria-label="Close" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Eliminar del carrito"></button>
+                    <button id="btn-elminar-carrito" type="button" class="btn-close" aria-label="Close" data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" title="Eliminar del carrito" value="${carrito.indexOf(element)}" onclick="eliminarDelCarrito()"></button>
                 </div>
                 </div>
             </div>
@@ -40,6 +41,10 @@ function displayCarritoItems (){
         `
         subtotal += element.price;
     });
+    if (carrito.length === 0){
+        html = `<h6 class="mt-4 fst-italic">Tu carrito está vacio</h6>`
+        document.getElementById("btn-gradient").setAttribute("disabled", "");
+    }
     document.getElementById("carrito-items-container").innerHTML = html;
     document.getElementById("carrito-subtotal").innerText += subtotal;
     document.getElementById("carrito-total").innerText += subtotal;
@@ -102,7 +107,12 @@ async function calcularEnvio() {
         total = subtotal + localidad.price;
         document.getElementById("price-envio").innerText = `$${localidad.price}`;
         document.getElementById("carrito-total").innerText = `$${total}`;
-    } else {
-        document.getElementById("price-envio").innerText = `El envio a ${inputEnvio.value} debe ser coordinado via WhatsApp al finalizar la compra`;
     }
 };
+
+function eliminarDelCarrito () {
+    const boton = document.getElementById("btn-elminar-carrito");
+    carrito.splice(boton.value, 1);
+    guardarCarrito();
+    location.reload();
+}

@@ -14,7 +14,10 @@ if (window.addEventListener) {
 
 // FUNCIONES //
 function agregarAlCarrito() {
-    carrito.push(item);
+    const cantidad = document.getElementById("cantidad-items");
+    for (let i = 0; i < cantidad.value; i++) {
+        carrito.push(item);
+    }
     guardarCarrito();
     actualizarCarrito();
     displayEtiquetaCarrito()
@@ -91,3 +94,17 @@ if (!sessionStorage.length) {
     localStorage.setItem('getSessionStorage', 'foobar');
     localStorage.removeItem('getSessionStorage', 'foobar');
 };
+
+//FUNCION PARA IR DIRECTO A CATEGORIA EN CATALOGO (todas las paginas)
+async function actualizarCategory(categoria){
+    let productsList = await (await fetch("/api/products")).json();
+    let filtro = productsList.filter(producto => producto.category == categoria);
+    sessionStorage.setItem("productsDisplaying", JSON.stringify(filtro));
+    sessionStorage.setItem("category", categoria);
+    window.location.href = window.location.href.replace(window.location.pathname, "/catalogo/catalogo.html");
+}
+
+function eliminarCategory(){
+    sessionStorage.removeItem("category");
+    sessionStorage.removeItem("productsDisplaying");
+}

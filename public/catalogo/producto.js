@@ -53,7 +53,7 @@ function displayItem(item) {
         <p id="stock-count" class="d-none stock fs-5">¡Últimas unidades disponibles!</p>
         <form class="form-floating d-flex">
             <div class="col-2 form-floating">
-                <input type="number" min="1" max="10" class="form-control text-center"
+                <input id="cantidad-items" type="number" min="1" max="10" class="form-control text-center"
                     id="floatingInputValue" placeholder="1" value="1">
                 <label for="floatingInputValue">Cant</label>
             </div>

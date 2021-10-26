@@ -32,13 +32,13 @@
                       Cátalogo
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="#">Deportes</a></li>
-                      <li><a class="dropdown-item" href="#">Funcional</a></li>
-                      <li><a class="dropdown-item" href="#">Barras y discos</a></li>
-                      <li><a class="dropdown-item" href="#">Yoga</a></li>
-                      <li><a class="dropdown-item" href="#">Promos</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="actualizarCategory(`deportes`)">Deportes</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="actualizarCategory(`funcional`)">Funcional</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="actualizarCategory(`barrasydiscos`)">Barras y discos</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="actualizarCategory(`yoga`)">Yoga</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="actualizarCategory(`promociones`)">Promos</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="./catalogo/catalogo.html">Ver todo</a></li>
+                      <li><a class="dropdown-item" href="./catalogo/catalogo.html" onclick="eliminarCategory()">Ver todo</a></li>
                     </ul>
                   </li>
                   <li class="nav-item">
@@ -103,7 +103,7 @@
                   <h1 class="d-none d-md-block">ST Materiales</h1>
                   <p class="d-none d-md-block">Todos los artículos que necesitas para entrenar en casa o equipar tu gimnasio. Lleva tu entrenamiento a otro nivel con los mejores materiales del mercado. <br>
                   ¡Entrena con ST!</p>
-                  <a class="btn btn-outline-info" href="./catalogo/catalogo.html">Ver productos</a>
+                  <a class="btn btn-outline-info" href="./catalogo/catalogo.html" onclick="eliminarCategory()">Ver productos</a>
                   <a class="btn btn-st" href="https://www.instagram.com/stmateriales/" target="blank">Nosotros</a>
                 </div>
               </div>
@@ -120,11 +120,11 @@
             </div>
             <div class="row mt-2 mt-md-4">
               <div class="col">
-                <a class="btn btn-outline-info mx-1 mb-2 mb-md-0" href="#">Deportes</a>
-                <a class="btn btn-outline-info mx-1 mb-2 mb-md-0" href="#">Funcional</a>
-                <a class="btn btn-outline-info mx-1 mb-2 mb-md-0" href="#">Yoga</a>
-                <a class="btn btn-outline-info mx-1 mb-2 mb-md-0" href="#">Barras y discos</a>
-                <a class="btn btn-outline-info mx-1 mb-2 mb-md-0" href="#">Promociones</a>
+                <a class="btn btn-outline-info mx-1 mb-2 mb-md-0" href="#" onclick="actualizarCategory(`deportes`)">Deportes</a>
+                <a class="btn btn-outline-info mx-1 mb-2 mb-md-0" href="#" onclick="actualizarCategory(`funcional`)">Funcional</a>
+                <a class="btn btn-outline-info mx-1 mb-2 mb-md-0" href="#" onclick="actualizarCategory(`yoga`)">Yoga</a>
+                <a class="btn btn-outline-info mx-1 mb-2 mb-md-0" href="#" onclick="actualizarCategory(`barrasydiscos`)">Barras y discos</a>
+                <a class="btn btn-outline-info mx-1 mb-2 mb-md-0" href="#" onclick="actualizarCategory(`promociones`)">Promociones</a>
               </div>
             </div>
           </div>
@@ -250,7 +250,7 @@
                     <h4 class="fs-4 text-uppercase">Al mejor precio</h4>
                   </div>
                   <div class="col-12 d-flex justify-content-center mt-5">
-                    <a class="btn btn-catalogo text-uppercase fw-bold" href="./catalogo/catalogo.html">
+                    <a class="btn btn-catalogo text-uppercase fw-bold" href="./catalogo/catalogo.html" onclick="eliminarCategory()">
                       <i class="bi bi-shop"> </i>
                       <span class="align-text-bottom">Ir al catalogo</span>
                       <i class="bi bi-forward-fill"></i>

@@ -5,6 +5,20 @@
     --gris-color: #828384;
 }
 
+body {
+    position: relative;
+    min-height: 100vh;
+}
+main {
+    padding-bottom: 74px;
+}
+
+footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
 .carrito-card {
     height: 170px;
 }
@@ -44,3 +58,4 @@
     background-color: var(--naranja-color);
     text-decoration: none;
 }
+
