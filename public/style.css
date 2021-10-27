@@ -93,7 +93,7 @@ body {
 #flecha-izquierda, #flecha-derecha {
     position: absolute;
     display: flex;
-    width: 15%;
+    width: 10%;
     top: 0;
     bottom: 0;
     padding: 0;
@@ -225,6 +225,12 @@ body {
     #novedades-container .card .img-fluid:hover {
         transition: none;
         height: 170px;
+    }
+}
+
+@media (max-width: 575px) {
+    #flecha-derecha {
+        right: 0;
     }
 }
 

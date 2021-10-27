@@ -36,7 +36,6 @@ function traerCarrito() {
     carrito = sessionStorage.getItem("carrito")
     if (carrito === null || carrito === undefined) {
         carrito = [];
-        console.log("pasa por acA")
     } else {
         actualizarCarrito();
     }
