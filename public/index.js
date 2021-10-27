@@ -44,6 +44,7 @@ function displayPromociones (productsList) {
               </div>
             </a>
           </div>
+          <div class="col-2 d-sm-none"></div>
         `
     }
   });
