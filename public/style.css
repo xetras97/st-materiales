@@ -175,7 +175,7 @@ body {
     text-shadow: 0px 0px 3px var(--negro-color);
 }
 
-#section-banner .btn-catalogo {
+#section-banner .btn-catalogo, #btn-gradient {
     background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA  51%, #1FA2FF  100%);
     display: flex;
     align-items: center;
@@ -190,7 +190,7 @@ body {
     display: block;   
 }
 
-#section-banner .btn-catalogo:hover {
+#section-banner .btn-catalogo:hover, #btn-gradient:hover {
     background-position: right center; /* change the direction of the change here */
     color: var(--negro-color);
     text-decoration: none;

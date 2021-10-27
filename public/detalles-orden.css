@@ -1,0 +1,61 @@
+:root {
+    --naranja-color: #EF8B57;
+    --negro-color: #0F0F0F;
+    --celeste-color:#4bb1dc;
+    --gris-color: #828384;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+}
+main {
+    padding-bottom: 74px;
+}
+
+footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+.carrito-card {
+    height: 170px;
+}
+
+.carrito-card .row {
+    height: 100%;
+    overflow: hidden;
+}
+
+.carrito-card .img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.carrito-card .card-body {
+    position: relative;
+}
+
+.carrito-card .btn-close {
+    position: absolute;
+    right: 1%;
+    top: 3%;
+}
+
+.carrito-card .price {
+    color: var(--negro-color);
+    text-shadow: 0px 0px 3px var(--naranja-color);
+}
+
+.order-details .card-text {
+    margin-bottom: 0;
+}
+
+.order-details .calc-envio {
+    margin: 0;
+    color: var(--negro-color);
+    background-color: var(--naranja-color);
+    text-decoration: none;
+}
+

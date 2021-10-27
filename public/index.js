@@ -1,8 +1,3 @@
-//Inicializar ToolTips
-const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
 //Al cargar pantalla se hace un fetch de la base de datos
 window.onload = async() => {
   const productsList = await (await fetch ("/api/products")).json();

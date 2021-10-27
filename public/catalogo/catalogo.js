@@ -56,7 +56,7 @@ async function displayCatalogo(page, order = unorder, category) {
       <div class="col-12 col-md-4 col-lg-3 mt-2 card-container">
           <a href="./${product.id}" class="text-dark" style="text-decoration: none;">
               <div class="card h-100">
-                  <img src="../${product.image}" class="img-fluid card-img-top" alt="${product.name}">
+                  <img src="${product.image}" class="img-fluid card-img-top" alt="${product.name}">
                   <div class="card-body">
                       <span class="badge text-dark badge-price">$${product.price}</span>
                       <h5 class="card-title">${product.name}</h5>
