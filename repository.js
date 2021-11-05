@@ -83,5 +83,3 @@ module.exports = {
     readEnvios,
     write,
 };
-
-readAndWrite();

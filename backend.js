@@ -1,7 +1,22 @@
 const express = require('express');
 const repository = require("./repository");
+const mercadopago = require ('mercadopago');
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+// app.post('/submit-form', (req, res) => {
+//   let person = {
+//     name: req.body.name,
+//     lastName: req.body.lastName,
+//     email: req.body.email,
+//     dni: req.body.dni,
+//     tel: req.body.tel
+//   }
+//   res.send(person)
+// })
 
 app.get('/api/products', requestProducts(), (req, res) => {
   res.json(res.products);
@@ -122,9 +137,6 @@ function pagination(model) {
 }
 
 var path = require('path');
-// app.get('/catalogo/hola', (req, res) => {
-//   res.sendFile(path.join(__dirname, "public/catalogo/producto.html"));
-// });
 
 app.get('/catalogo/:name', requestProducts(), (req, res) => {
   let products = res.products
@@ -136,17 +148,65 @@ app.get('/catalogo/:name', requestProducts(), (req, res) => {
   }
 });
 
-// var fs = require('fs');
+app.get('/checkout/carrito', (req, res) => {
+  res.sendFile(path.join(__dirname, "public/detalles-orden.html"));
+});
 
-// // Change the content of the file as you want
-// // or either set fileContent to null to create an empty file
-// var fileContent = "Hello World!";
+app.get('/checkout/carrito', (req, res) => {
+  res.sendFile(path.join(__dirname, "public/detalles-orden.html"));
+});
 
-// // The absolute path of the new file with its name
-// var filepath = "public/mynewfile.html";
+app.get('/checkout/carrito', (req, res) => {
+  res.sendFile(path.join(__dirname, "public/detalles-orden.html"));
+});
 
-// fs.writeFile(filepath, fileContent, (err) => {
-//     if (err) throw err;
+mercadopago.configure({
+  access_token: 'TEST-6550289460006868-110417-c7116534e6da38235aaae15677029515-129900623'
+});
 
-//     console.log("The file was succesfully saved!");
-// }); 
+app.post("/mp", (req, res) => {
+  let preference = {
+		items: [],
+    shipments: {
+        "cost": req.body.envio,
+        "mode": "not_specified",
+    },
+    payment_methods: {
+      "excluded_payment_types": [
+          {
+              "id": "ticket"
+          }
+      ],
+    },
+    back_urls: {
+			"success": "http://localhost:3000/feedback",
+			"failure": "http://localhost:3000/feedback",
+			"pending": "http://localhost:3000/feedback"
+		},
+		auto_return: "approved",
+  }
+  for (let i = 0; i < req.body.productos.length; i++) {
+      preference.items.push({
+        title: req.body.productos[i].titulo,
+        unit_price: req.body.productos[i].precio,
+        quantity: req.body.productos[i].cantidad,
+      });
+  };
+  mercadopago.preferences.create(preference)
+		.then(function (response) {
+			res.json({
+				id: response.body.id
+			});
+		}).catch(function (error) {
+			console.log(error);
+		});
+});
+
+app.get('/feedback', function(req, res) {
+	res.json({
+		Payment: req.query.payment_id,
+		Status: req.query.status,
+		MerchantOrder: req.query.merchant_order_id
+	});
+});
+
