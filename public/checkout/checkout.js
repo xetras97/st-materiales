@@ -29,6 +29,7 @@ let personalData;
 let subtotal = 0;
 let total = 0;
 let envio = 0;
+let entrega = "Envio";
 
 if (window.addEventListener) {
   window.addEventListener("load", displayCarritoItems, false);
@@ -59,7 +60,7 @@ document.getElementById("envio-form").addEventListener("submit", (event) =>{
     document.getElementById("panelsStayOpen-collapseThree").classList.add("show");
     document.getElementById("btn-pago").classList.remove("collapsed");
     document.getElementById("btn-pago").removeAttribute("disabled", "")
-    document.getElementById("mercadopago").innerHTML = "";
+    limpiarMetodos();
     calcularEnvio();
   };
 })
@@ -73,7 +74,7 @@ document.getElementById("retiro-form").addEventListener("submit", (event) =>{
     document.getElementById("panelsStayOpen-collapseThree").classList.add("show");
     document.getElementById("btn-pago").classList.remove("collapsed");
     document.getElementById("btn-pago").removeAttribute("disabled", "")
-    document.getElementById("mercadopago").innerHTML = "";
+    limpiarMetodos();
     envioEnRetiro();
   };
 })
@@ -84,9 +85,11 @@ function displayForm () {
   if (checkbox.checked) {
     envioForm.classList.add("d-none");
     retiroForm.classList.remove("d-none");
+    entrega = "Retiro";
   } else {
     retiroForm.classList.add("d-none");
     envioForm.classList.remove("d-none");
+    entrega = "Envio";
   }
 };
 
@@ -191,34 +194,40 @@ const mercadopago = new MercadoPago('TEST-9deedcc5-360f-40c7-878a-d49d19c6adf2',
 });
 
 document.getElementById('btn-checkout').addEventListener("click", function (){
-  let orden = {
-    envio: envio,
-    productos: []
-  };
-  carrito.forEach(element => {
-    orden.productos.push({
-      titulo: element.name,
-      precio: element.price,
-      cantidad: 1
+  limpiarMetodos();
+  document.getElementById('mercadopago').classList.remove("d-none");
+  if (entrega == "Retiro" || envio == 0) {
+    whatsappCheckout("Mercado Pago");
+  } else {
+    let orden = {
+      envio: envio,
+      productos: []
+    };
+    carrito.forEach(element => {
+      orden.productos.push({
+        titulo: element.name,
+        precio: element.price,
+        cantidad: 1
+      });
     });
-  });
-
-  fetch("/mp",{
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify(orden)
-  })
-    .then(function(response) {
-        return response.json();
+  
+    fetch("/mp",{
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(orden)
     })
-    .then(function(preference) {
-        createCheckoutButton(preference.id);
-    })
-    .catch(function() {
-        alert("Unexpected error");
-    });
+      .then(function(response) {
+          return response.json();
+      })
+      .then(function(preference) {
+          createCheckoutButton(preference.id);
+      })
+      .catch(function() {
+          alert("Unexpected error");
+      });
+  }
 })
 
 function createCheckoutButton(preferenceId) {
@@ -233,3 +242,71 @@ function createCheckoutButton(preferenceId) {
     }
   });
 };  
+
+// WhatsApp
+
+function whatsappCheckout (metodoDePago) {
+  let ordenWpp = ``;
+  document.getElementById("whatsapp").classList.remove("d-none");
+  if (metodoDePago == "Efectivo") {
+    document.getElementById("wpp-text").innerText = "La compra finalizará via WhatsApp para coordinar la entrega y el pago";
+  } else if (metodoDePago == "Mercado Pago") {
+    document.getElementById("wpp-text").innerText = "La compra finalizará via WhatsApp para coordinar la entrega y recibir el link de pago";
+  } else {
+    document.getElementById("wpp-text").innerText = "Finalizá el pedido via WhatsApp para recibir los datos de cuenta y coordinar la entrega de los productos";
+  };
+
+  if (entrega == "Retiro") {
+    ordenWpp = `Hola, este es mi pedido:
+    *Productos:* ${productosName()}
+    *Precio*: $${carritoSuma()}
+    *Metodo de pago:* ${metodoDePago}
+    *Entrega:* ${entrega} | ${deliveryData.get("retiro")}
+    *Datos personales:*
+    *Nombre:* ${personalData.get("name")} ${personalData.get("lastName")}
+    *Mail:* ${personalData.get("email")}
+    *Telefono:* ${personalData.get("tel")}
+    `
+  } else {
+    ordenWpp = `Hola, este es mi pedido:
+    *Productos:* ${productosName()}
+    *Precio de productos*: $${carritoSuma()}
+    *Metodo de pago:* ${metodoDePago}
+    *Entrega:* ${entrega} | ${document.getElementById("price-envio").innerText}
+    *Datos personales:*
+    *Nombre:* ${personalData.get("name")} ${personalData.get("lastName")}
+    *Mail:* ${personalData.get("email")}
+    *Telefono:* ${personalData.get("tel")}
+    *Datos de envio:*
+    *Domicilio:* ${deliveryData.get("street")} ${deliveryData.get("number")} ${deliveryData.get("piso")} ${deliveryData.get("depto")}
+    *Cod. Postal:* ${deliveryData.get("post-code")}
+    *Provincia:* ${deliveryData.get("provincia")}
+    *Localidad:* ${deliveryData.get("localidad")}
+    `
+  }
+  
+  document.getElementById("wpp-btn").setAttribute("href", `https://wa.me/5491156078168/?text=${encodeURIComponent(ordenWpp)}`)
+};
+
+function productosName() {
+  let productosText = "";
+  for (let p = 0; p < carrito.length; p++) {
+    productosText += `${(p + 1)}- ` + carrito[p].name + " ";
+  }
+  return productosText;
+}
+
+function carritoSuma() {
+  let precio = 0;
+  carrito.forEach(element => {
+    precio += element.price
+  });
+  return precio;
+}
+
+function limpiarMetodos(){
+  document.getElementById("wpp-text").innerText = "";
+  document.getElementById("whatsapp").classList.add("d-none");
+  document.getElementById("mercadopago").innerHTML = ""
+  document.getElementById('mercadopago').classList.remove("d-none");
+}
