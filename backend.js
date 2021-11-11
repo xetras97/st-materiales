@@ -1,11 +1,28 @@
 const express = require('express');
 const repository = require("./repository");
 const mercadopago = require ('mercadopago');
+const multer  = require('multer')
+const upload = multer()
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+let comprador = {
+  nombre: "",
+  apellido: "",
+  email: "",
+  dni: "",
+  tel: "",
+  direccion: "",
+  altura: "",
+  piso: "",
+  depto: "",
+  cp: "",
+  provincia: "",
+  localidad: "",
+};
 
 // app.post('/submit-form', (req, res) => {
 //   let person = {
@@ -152,16 +169,8 @@ app.get('/checkout/carrito', (req, res) => {
   res.sendFile(path.join(__dirname, "public/detalles-orden.html"));
 });
 
-app.get('/checkout/carrito', (req, res) => {
-  res.sendFile(path.join(__dirname, "public/detalles-orden.html"));
-});
-
-app.get('/checkout/carrito', (req, res) => {
-  res.sendFile(path.join(__dirname, "public/detalles-orden.html"));
-});
-
 mercadopago.configure({
-  access_token: 'TEST-6550289460006868-110417-c7116534e6da38235aaae15677029515-129900623'
+  access_token: 'APP_USR-4901376900016949-110714-f0a403b5ed979d5010c84305c61ee4a6-1014202756'
 });
 
 app.post("/mp", (req, res) => {
@@ -210,3 +219,34 @@ app.get('/feedback', function(req, res) {
 	});
 });
 
+app.post("/form", upload.none(), (req, res) => {
+  comprador.nombre = req.body.name;
+  comprador.apellido = req.body.lastName;
+  comprador.email = req.body.email;
+  comprador.dni = req.body.dni;
+  comprador.tel = req.body.tel;
+  res.sendStatus(200);
+})
+
+app.post("/forms", upload.none(), (req, res) => {
+  comprador.direccion = req.body.street;
+  comprador.altura = req.body.number;
+  comprador.piso = req.body.piso;
+  comprador.depto = req.body.depto;
+  comprador.cp = req.body.postcode;
+  comprador.provincia = req.body.provincia;
+  comprador.localidad = req.body.localidad;
+  res.sendStatus(200);
+})
+
+app.get('/form', (req, res) => {
+  res.json(comprador);
+});
+
+app.get('/api/pedidos', async (req, res) => {
+  let totalPedidos = await repository.readPedidos()
+  let newTotal = Number(totalPedidos) + 1;
+  console.log(newTotal);
+  repository.writePedidos(newTotal);
+  res.json(totalPedidos);
+});

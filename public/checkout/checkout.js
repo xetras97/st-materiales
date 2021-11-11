@@ -48,6 +48,10 @@ document.getElementById("personal-form").addEventListener("submit", (event) =>{
     document.getElementById("btn-envio").classList.remove("collapsed");
     document.getElementById("btn-envio").removeAttribute("disabled", "");
     displayProvincias();
+    fetch("/form", {
+      method: "POST",
+      body: personalData
+    });
   };
 })
 
@@ -62,6 +66,10 @@ document.getElementById("envio-form").addEventListener("submit", (event) =>{
     document.getElementById("btn-pago").removeAttribute("disabled", "")
     limpiarMetodos();
     calcularEnvio();
+    fetch("/forms", {
+      method: "POST",
+      body: deliveryData
+    });
   };
 })
 
@@ -189,12 +197,13 @@ function envioEnRetiro () {
 
 // MERCADOPAGO
 
-const mercadopago = new MercadoPago('TEST-9deedcc5-360f-40c7-878a-d49d19c6adf2', {
+const mercadopago = new MercadoPago('APP_USR-ced17b9d-afb5-467a-afbe-b58e0712fa94', {
   locale: 'es-AR' // The most common are: 'pt-BR', 'es-AR' and 'en-US'
 });
 
 document.getElementById('btn-checkout').addEventListener("click", function (){
   limpiarMetodos();
+  sessionStorage.setItem("total", total);
   document.getElementById('mercadopago').classList.remove("d-none");
   if (entrega == "Retiro" || envio == 0) {
     whatsappCheckout("Mercado Pago");
@@ -279,7 +288,7 @@ function whatsappCheckout (metodoDePago) {
     *Telefono:* ${personalData.get("tel")}
     *Datos de envio:*
     *Domicilio:* ${deliveryData.get("street")} ${deliveryData.get("number")} ${deliveryData.get("piso")} ${deliveryData.get("depto")}
-    *Cod. Postal:* ${deliveryData.get("post-code")}
+    *Cod. Postal:* ${deliveryData.get("postcode")}
     *Provincia:* ${deliveryData.get("provincia")}
     *Localidad:* ${deliveryData.get("localidad")}
     `
@@ -309,4 +318,4 @@ function limpiarMetodos(){
   document.getElementById("whatsapp").classList.add("d-none");
   document.getElementById("mercadopago").innerHTML = ""
   document.getElementById('mercadopago').classList.remove("d-none");
-}
+};

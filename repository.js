@@ -56,6 +56,18 @@ async function readEnvios() {
     return localidades;
 };
 
+async function readPedidos() {
+    const response = await sheets.spreadsheets.values.get({
+        spreadsheetId: '16nrQ187NJdcRmuq8oquMkLGoHpoXqWyEpkFcLbRgLZU',
+        range: 'PEDIDOS!L2',
+    });
+
+    const rows = response.data.values;
+    const totalPedidos = rows[0];
+
+    return totalPedidos;
+};
+
 async function write(products) {
     let values = products.map(p => [p.id, p.name, p.price, p.category, p.stock, p.image, p.description, p.new])
 
@@ -65,6 +77,22 @@ async function write(products) {
     const result = await sheets.spreadsheets.values.update({
         spreadsheetId: '16nrQ187NJdcRmuq8oquMkLGoHpoXqWyEpkFcLbRgLZU',
         range: 'Productos!A2:H',
+        valueInputOption: "RAW",
+        resource,
+    });
+
+    console.log(result.updatedCells);
+};
+
+async function writePedidos(totalPedidos) {
+    let values = [[totalPedidos]]
+
+    const resource = {
+        values,
+    };
+    const result = await sheets.spreadsheets.values.update({
+        spreadsheetId: '16nrQ187NJdcRmuq8oquMkLGoHpoXqWyEpkFcLbRgLZU',
+        range: 'PEDIDOS!L2',
         valueInputOption: "RAW",
         resource,
     });
@@ -82,4 +110,6 @@ module.exports = {
     read,
     readEnvios,
     write,
+    readPedidos,
+    writePedidos,
 };
