@@ -19,6 +19,8 @@
   "homepage": "https://github.com/xetras97/st-materiales#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "googleapis": "^89.0.0"
+    "googleapis": "^89.0.0",
+    "mercadopago": "^1.5.9",
+    "multer": "^1.4.3"
   }
 }

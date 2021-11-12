@@ -1,7 +1,34 @@
 const express = require('express');
 const repository = require("./repository");
+const mercadopago = require ('mercadopago');
+const multer  = require('multer')
+const path = require('path');
+const upload = multer()
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+let idMp;
+let estado;
+let totalPrueba = 0;
+
+
+let comprador = {
+  nombre: "",
+  apellido: "",
+  email: "",
+  dni: "",
+  tel: "",
+  direccion: "",
+  altura: "",
+  piso: "",
+  depto: "",
+  cp: "",
+  provincia: "",
+  localidad: "",
+};
 
 app.get('/api/products', requestProducts(), (req, res) => {
   res.json(res.products);
@@ -121,11 +148,6 @@ function pagination(model) {
   }
 }
 
-var path = require('path');
-// app.get('/catalogo/hola', (req, res) => {
-//   res.sendFile(path.join(__dirname, "public/catalogo/producto.html"));
-// });
-
 app.get('/catalogo/:name', requestProducts(), (req, res) => {
   let products = res.products
   let param = req.params.name
@@ -136,17 +158,153 @@ app.get('/catalogo/:name', requestProducts(), (req, res) => {
   }
 });
 
-// var fs = require('fs');
+app.get('/checkout/carrito', (req, res) => {
+  res.sendFile(path.join(__dirname, "public/detalles-orden.html"));
+});
 
-// // Change the content of the file as you want
-// // or either set fileContent to null to create an empty file
-// var fileContent = "Hello World!";
+mercadopago.configure({
+  access_token: 'APP_USR-4901376900016949-110714-f0a403b5ed979d5010c84305c61ee4a6-1014202756'
+});
 
-// // The absolute path of the new file with its name
-// var filepath = "public/mynewfile.html";
+app.post("/mp", (req, res) => {
+  let preference = {
+		items: [],
+    payer:{
+      name: req.body.payer.name,
+      surname: req.body.payer.surname,
+      email: req.body.payer.email,
+      date_created: req.body.payer.date_created,
+      phone: {
+        area_code: "",
+        number: Number(req.body.payer.phone.number)
+      },
+       
+      identification: {
+        type: "DNI",
+        number: req.body.payer.identification.number
+      },
+      
+      address: {
+        street_name: req.body.payer.address.street_name,
+        street_number: Number(req.body.payer.address.street_number),
+        zip_code: req.body.payer.address.zip_code
+      }
+    },
+    shipments: {
+        "cost": req.body.envio,
+        "mode": "not_specified",
+    },
+    payment_methods: {
+      "excluded_payment_types": [
+          {
+              "id": "ticket"
+          }
+      ],
+    },
+    back_urls: {
+			"success": "http://localhost:3000/feedback",
+			"failure": "http://localhost:3000/feedback",
+			"pending": "http://localhost:3000/feedback"
+		},
+		auto_return: "approved",
+  }
+  for (let i = 0; i < req.body.productos.length; i++) {
+      preference.items.push({
+        title: req.body.productos[i].titulo,
+        unit_price: req.body.productos[i].precio,
+        quantity: req.body.productos[i].cantidad,
+      });
+  };
+  mercadopago.preferences.create(preference)
+		.then(function (response) {
+			res.json({
+				id: response.body.id
+			});
+		}).catch(function (error) {
+			console.log(error);
+		});
+});
 
-// fs.writeFile(filepath, fileContent, (err) => {
-//     if (err) throw err;
+app.get('/feedback', function(req, res) {
+  if (req.query.status == "approved" || req.query.status == "in_process") {
+    idMp = req.query.payment_id;
+    estado = req.query.status;
+    totalPrueba = totalPrueba + 1;
+    res.redirect(`/checkout/${idMp}`)
+  } else if ((req.query.status == "rejected")) {
+    res.sendFile(path.join(__dirname, "public/checkout/fail.html"))
+  }
+});
 
-//     console.log("The file was succesfully saved!");
-// }); 
+app.post("/form", upload.none(), (req, res) => {
+  comprador.nombre = req.body.name;
+  comprador.apellido = req.body.lastName;
+  comprador.email = req.body.email;
+  comprador.dni = req.body.dni;
+  comprador.tel = req.body.tel;
+  res.sendStatus(200);
+})
+
+app.post("/forms", upload.none(), (req, res) => {
+  comprador.direccion = req.body.street;
+  comprador.altura = req.body.number;
+  comprador.piso = req.body.piso;
+  comprador.depto = req.body.depto;
+  comprador.cp = req.body.postcode;
+  comprador.provincia = req.body.provincia;
+  comprador.localidad = req.body.localidad;
+  res.sendStatus(200);
+})
+
+app.get('/form', (req, res) => {
+  res.json(comprador);
+});
+
+app.get('/api/pedidos/total', (req, res) => {
+  res.json(totalPrueba);
+});
+
+app.get('/checkout/:name', (req, res) => {
+  let param = req.params.name;
+  if (idMp == param && estado == "approved") {
+    res.sendFile(path.join(__dirname, "public/checkout/sucess.html"));
+  } else if (idMp == param && estado == "in_process") {
+    res.sendFile(path.join(__dirname, "public/checkout/pending.html"));
+  } else {
+    res.sendFile(path.join(__dirname, "public/notfound.html"));
+  }
+});
+
+function requestTotalPedidos() {
+  return async (req, res, next) => {
+    let totalPedidos = await repository.readTotalPedidos();
+    let newTotal = Number(totalPedidos) + 1;
+    res.newTotal = newTotal;
+    next()
+  }
+};
+
+app.get('/api/pedidos', async (req, res) => {
+  let pedidos = await repository.readPedidos()
+  res.json(pedidos);
+});
+
+app.post('/api/pedidos', requestTotalPedidos(), async (req, res) => {
+  let newTotal = res.newTotal;
+  let pedidos = await repository.readPedidos()
+  req.body.idPago = idMp;
+  req.body.estado = estado;
+  if (typeof pedidos === 'undefined') {
+    pedidos = [req.body];
+    repository.writePedidos(pedidos);
+  } else {
+    if (pedidos.some(element => element.idPago == req.body.idPago)) {
+      // nada
+    } else {
+      pedidos.push(req.body)
+      repository.writePedidos(pedidos)
+    }
+  }
+  
+  res.sendStatus(200);
+});
