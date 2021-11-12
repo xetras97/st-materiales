@@ -1,14 +1,36 @@
 window.onload = async () => {
     await traerCompradoryPedidos();
     displayResumen()
+    enviarPedido ()
+};
+window.onbeforeunload = function() {
+    return "Al salir o recargar la pagina no podra acceder a su resumen, por favor descarguelo o imprimalo";
 };
 let comprador;
-let pedidos;
+let totalPedidos;
+let pedido;
 
 async function traerCompradoryPedidos () {
     comprador = await (await fetch ("/form")).json();
-    pedidos = await (await fetch ("/api/pedidos")).json();
-    pedidos = pedidos[0];
+    totalPedidos = await (await fetch ("/api/pedidos/total")).json();
+    totalPedidos = totalPedidos[0];
+    let nombresProductos = "";
+    carrito.forEach(element => {
+        nombresProductos += `${element.name}\n`
+    });
+    pedido = {
+        numero: Number(totalPedidos),
+        productos: nombresProductos,
+        total: sessionStorage.getItem("total"),
+        idPago: "",
+        nombre: `${comprador.nombre} ${comprador.apellido}`,
+        mail: comprador.email,
+        telefono: comprador.tel,
+        direccion: `${comprador.direccion} ${comprador.altura} ${comprador.piso} ${comprador.depto}`,
+        localidad: comprador.localidad,
+        provincia: comprador.provincia,
+        cp: comprador.cp
+    }
 };
 
 function download() {
@@ -50,5 +72,15 @@ function displayResumen() {
     document.getElementById("provincia").innerText = comprador.localidad + ", " + comprador.provincia; 
     document.getElementById("nombre").innerText = comprador.nombre + " " + comprador.apellido + " - " + comprador.tel;
     document.getElementById("total").innerText += sessionStorage.getItem("total");
-    document.getElementById("total-pedidos").innerText += (Number(pedidos) + 1);
+    document.getElementById("total-pedidos").innerText += Number(totalPedidos);
+}
+
+function enviarPedido () {
+    fetch("/api/pedidos",{
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(pedido)
+      })
 }

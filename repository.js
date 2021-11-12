@@ -56,7 +56,7 @@ async function readEnvios() {
     return localidades;
 };
 
-async function readPedidos() {
+async function readTotalPedidos() {
     const response = await sheets.spreadsheets.values.get({
         spreadsheetId: '16nrQ187NJdcRmuq8oquMkLGoHpoXqWyEpkFcLbRgLZU',
         range: 'PEDIDOS!L2',
@@ -84,15 +84,39 @@ async function write(products) {
     console.log(result.updatedCells);
 };
 
-async function writePedidos(totalPedidos) {
-    let values = [[totalPedidos]]
+async function readPedidos() {
+    const response = await sheets.spreadsheets.values.get({
+        spreadsheetId: '16nrQ187NJdcRmuq8oquMkLGoHpoXqWyEpkFcLbRgLZU',
+        range: 'PEDIDOS!A3:K',
+    });
+
+    const rows = response.data.values;
+    const pedidos = rows.map((row) => ({
+        numero: +row[0],
+        productos: row[1],
+        total: +row[2],
+        idPago: +row[3],
+        nombre: row[4],
+        mail: row[5],
+        telefono: row[6],
+        direccion: row[7],
+        localidad: row[8],
+        provincia: row[9],
+        cp: row[10]
+    }));
+
+    return pedidos;
+};
+
+async function writePedidos(pedidos) {
+    let values = pedidos.map(p => [p.numero, p.productos, p.total, p.idPago, p.nombre, p.mail, p.telefono, p.direccion, p.localidad, p.provincia, p.cp])
 
     const resource = {
         values,
     };
     const result = await sheets.spreadsheets.values.update({
         spreadsheetId: '16nrQ187NJdcRmuq8oquMkLGoHpoXqWyEpkFcLbRgLZU',
-        range: 'PEDIDOS!L2',
+        range: 'PEDIDOS!A3:K',
         valueInputOption: "RAW",
         resource,
     });
@@ -111,5 +135,7 @@ module.exports = {
     readEnvios,
     write,
     readPedidos,
+    readTotalPedidos,
+    // writeTotalPedidos,
     writePedidos,
 };

@@ -9,6 +9,9 @@ const port = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+let idMp;
+let cantImpreso = false;
+
 let comprador = {
   nombre: "",
   apellido: "",
@@ -212,11 +215,10 @@ app.post("/mp", (req, res) => {
 });
 
 app.get('/feedback', function(req, res) {
-	res.json({
-		Payment: req.query.payment_id,
-		Status: req.query.status,
-		MerchantOrder: req.query.merchant_order_id
-	});
+  if (req.query.status == "approved") {
+    idMp = req.query.payment_id;
+    res.redirect(`/checkout/${idMp}`)
+  }
 });
 
 app.post("/form", upload.none(), (req, res) => {
@@ -243,10 +245,47 @@ app.get('/form', (req, res) => {
   res.json(comprador);
 });
 
-app.get('/api/pedidos', async (req, res) => {
-  let totalPedidos = await repository.readPedidos()
-  let newTotal = Number(totalPedidos) + 1;
-  console.log(newTotal);
-  repository.writePedidos(newTotal);
+app.get('/api/pedidos/total', async (req, res) => {
+  let totalPedidos = await repository.readTotalPedidos()
+  if (!cantImpreso) {
+    totalPedidos[0] = Number(totalPedidos[0]) + 1;
+    cantImpreso = true;
+  }
   res.json(totalPedidos);
+});
+
+app.get('/checkout/:name', (req, res) => {
+  let param = req.params.name;
+  if (idMp == param) {
+    res.sendFile(path.join(__dirname, "public/checkout/sucess.html"));
+  } else {
+    res.sendFile(path.join(__dirname, "public/notfound.html"));
+  }
+});
+
+function requestTotalPedidos() {
+  return async (req, res, next) => {
+    let totalPedidos = await repository.readTotalPedidos();
+    let newTotal = Number(totalPedidos) + 1;
+    res.newTotal = newTotal;
+    next()
+  }
+};
+
+app.get('/api/pedidos', async (req, res) => {
+  let pedidos = await repository.readPedidos()
+  res.json(pedidos);
+});
+
+app.post('/api/pedidos', requestTotalPedidos(), async (req, res) => {
+  let newTotal = res.newTotal;
+  let pedidos = await repository.readPedidos()
+  req.body.idPago = idMp;
+  if (pedidos.some(element => element.idPago == req.body.idPago)) {
+    // nada
+  } else {
+    pedidos.push(req.body)
+    repository.writePedidos(pedidos)
+  }
+  res.sendStatus(200);
 });
