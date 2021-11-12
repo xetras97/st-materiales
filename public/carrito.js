@@ -100,7 +100,11 @@ async function actualizarCategory(categoria){
     let filtro = productsList.filter(producto => producto.category == categoria);
     sessionStorage.setItem("productsDisplaying", JSON.stringify(filtro));
     sessionStorage.setItem("category", categoria);
-    window.location.href = window.location.href.replace(window.location.pathname, "/catalogo/catalogo.html");
+    if (window.location.pathname == "/") {
+        window.location.href = window.location.hostname + "/catalogo/catalogo.html";
+    } else {
+        window.location.href = window.location.href.replace(window.location.pathname, "/catalogo/catalogo.html");
+    };
 }
 
 function eliminarCategory(){
