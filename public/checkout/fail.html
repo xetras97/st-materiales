@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../style.css">
 </head>
 
-<body>
+<body style="position: relative; height: 100vh;">
   <header id="header" class="header sticky-top">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
@@ -72,78 +72,28 @@
     </nav>
   </header>
 
-  <main>
+  <main class="d-flex align-items-center justify-content-center" style="height: 80vh;">
     <div id="pdf-container">
       <div class="container-fluid mb-4">
         <div class="row">
           <div class="col-12 text-center">
-            <img src="https://i.ibb.co/HCNTFcS/st-logo.png" alt="ST Materiales" width="100px">
+            <img src="https://i.ibb.co/HCNTFcS/st-logo.png" alt="ST Materiales" width="150px">
           </div>
           <div class="col-12 text-center">
-            <h4 class="text-dark text-uppercase">¡Su compra ha sido realizada con exito!</h4>  
+            <h4 class="text-dark text-uppercase">Su compra ha sido rechazada</h4>  
           </div>
-        </div>
-      </div>
-      
-      <div class="container">
-        <div class="row">
-          <div class="col-10 offset-1 col-md-6 offset-md-3 border-bottom border-top border-start border-end">
-            <div class="row mt-2">
-              <div class="col-12">
-                <h5>Resumen de tu compra</h5>
-              </div>
-              <div class="col-12">
-                <p id="total-pedidos" class="text-dark mb-0 mt-2">Pedido N° </p>
-              </div>
-              <div id="items-list" class="row mt-3">
-                <div class="col-1 text-center p-0">
-                  <i class="bi bi-cart2 fs-4"></i>
-                </div>
-                <div class="col-11 text-start d-flex align-items-center p-0">
-                  <p class="mb-0 ms-2">Compraste:</p>
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-1 text-center p-0">
-                  <i class="bi bi-piggy-bank fs-4"></i>
-                </div>
-                <div class="col-11 text-start d-flex align-items-center p-0">
-                  <p id="total" class="mb-0 ms-2">Pagaste $</p>
-                </div>
-              </div>
-              <div class="row mt-3 mb-3">
-                <div class="col-1 text-center p-0">
-                  <i class="bi bi-truck fs-4"></i>
-                </div>
-                <div class="col-11 text-start d-flex align-items-center p-0">
-                  <p class="mb-0 ms-2">Envio a domicilio</p>
-                </div>
-                <div class="col-11 offset-1 text-start d-flex align-items-center p-0">
-                  <p id="domicilio" class="mb-0 ms-2 text-muted"></p>
-                </div>
-                <div class="col-11 offset-1 text-start d-flex align-items-center p-0">
-                  <p id="provincia" class="mb-0 ms-2 text-muted"></p>
-                </div>
-                <div class="col-11 offset-1 text-start d-flex align-items-center p-0">
-                  <p id="nombre" class="mb-0 ms-2 text-muted"></p>
-                </div>
-              </div>
-            </div>
+          <div class="col-12 text-center">
+            <p class="text-dark mb-0">Por favor corrobore su método de pago y vuelva a realizar la compra</p>  
           </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="container mt-3 mb-3">
-      <div class="row">
-        <div class="col-md-4 offset-md-4 text-center">
-          <button class="btn btn-outline-info text-dark fw-bold" onclick="download()">Descargar Resumen</button>
+          <div class="col-12 text-center">
+            <a href="../detalles-orden.html" class="text-dark btn"><< Volver al carrito >></a>  
+          </div>
         </div>
       </div>
     </div>
   </main>
 
-  <footer id="footer">
+  <footer id="footer" style="position: absolute; bottom: 0; width: 100%;">
       <div class="container-fluid pt-4">
         <div class="row">
           <div class="col-4 text-start d-flex align-items-end">
@@ -178,8 +128,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
   <script src="../carrito.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-  <script src="./sucess.js"></script>
 </body>
 
 </html>

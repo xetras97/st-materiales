@@ -210,8 +210,30 @@ document.getElementById('btn-checkout').addEventListener("click", function (){
   } else {
     let orden = {
       envio: envio,
-      productos: []
+      productos: [],
+      payer: {
+        name: personalData.get("name"),
+        surname: personalData.get("lastName"),
+        email: personalData.get("email"),
+        date_created: "",
+        phone: {
+          area_code: "",
+          number: personalData.get("tel")
+        },
+         
+        identification: {
+          type: "DNI",
+          number: personalData.get("dni")
+        },
+        
+        address: {
+          street_name: deliveryData.get("street"),
+          street_number: deliveryData.get("number"),
+          zip_code: deliveryData.get("postcode")
+        }
+      }
     };
+    console.log(orden)
     carrito.forEach(element => {
       orden.productos.push({
         titulo: element.name,

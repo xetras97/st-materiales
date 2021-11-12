@@ -1,7 +1,7 @@
 window.onload = async () => {
     await traerCompradoryPedidos();
+    await enviarPedido ()
     displayResumen()
-    enviarPedido ()
 };
 window.onbeforeunload = function() {
     return "Al salir o recargar la pagina no podra acceder a su resumen, por favor descarguelo o imprimalo";
@@ -13,7 +13,6 @@ let pedido;
 async function traerCompradoryPedidos () {
     comprador = await (await fetch ("/form")).json();
     totalPedidos = await (await fetch ("/api/pedidos/total")).json();
-    totalPedidos = totalPedidos[0];
     let nombresProductos = "";
     carrito.forEach(element => {
         nombresProductos += `${element.name}\n`
@@ -75,7 +74,7 @@ function displayResumen() {
     document.getElementById("total-pedidos").innerText += Number(totalPedidos);
 }
 
-function enviarPedido () {
+async function enviarPedido () {
     fetch("/api/pedidos",{
         method: "POST",
         headers: {

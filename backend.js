@@ -2,6 +2,7 @@ const express = require('express');
 const repository = require("./repository");
 const mercadopago = require ('mercadopago');
 const multer  = require('multer')
+const path = require('path');
 const upload = multer()
 const app = express();
 const port = process.env.PORT || 3000;
@@ -10,7 +11,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 let idMp;
-let cantImpreso = false;
+let estado;
+let totalPrueba = 0;
+
 
 let comprador = {
   nombre: "",
@@ -26,17 +29,6 @@ let comprador = {
   provincia: "",
   localidad: "",
 };
-
-// app.post('/submit-form', (req, res) => {
-//   let person = {
-//     name: req.body.name,
-//     lastName: req.body.lastName,
-//     email: req.body.email,
-//     dni: req.body.dni,
-//     tel: req.body.tel
-//   }
-//   res.send(person)
-// })
 
 app.get('/api/products', requestProducts(), (req, res) => {
   res.json(res.products);
@@ -156,8 +148,6 @@ function pagination(model) {
   }
 }
 
-var path = require('path');
-
 app.get('/catalogo/:name', requestProducts(), (req, res) => {
   let products = res.products
   let param = req.params.name
@@ -179,6 +169,27 @@ mercadopago.configure({
 app.post("/mp", (req, res) => {
   let preference = {
 		items: [],
+    payer:{
+      name: req.body.payer.name,
+      surname: req.body.payer.surname,
+      email: req.body.payer.email,
+      date_created: req.body.payer.date_created,
+      phone: {
+        area_code: "",
+        number: Number(req.body.payer.phone.number)
+      },
+       
+      identification: {
+        type: "DNI",
+        number: req.body.payer.identification.number
+      },
+      
+      address: {
+        street_name: req.body.payer.address.street_name,
+        street_number: Number(req.body.payer.address.street_number),
+        zip_code: req.body.payer.address.zip_code
+      }
+    },
     shipments: {
         "cost": req.body.envio,
         "mode": "not_specified",
@@ -215,9 +226,13 @@ app.post("/mp", (req, res) => {
 });
 
 app.get('/feedback', function(req, res) {
-  if (req.query.status == "approved") {
+  if (req.query.status == "approved" || req.query.status == "in_process") {
     idMp = req.query.payment_id;
+    estado = req.query.status;
+    totalPrueba = totalPrueba + 1;
     res.redirect(`/checkout/${idMp}`)
+  } else if ((req.query.status == "rejected")) {
+    res.sendFile(path.join(__dirname, "public/checkout/fail.html"))
   }
 });
 
@@ -245,19 +260,16 @@ app.get('/form', (req, res) => {
   res.json(comprador);
 });
 
-app.get('/api/pedidos/total', async (req, res) => {
-  let totalPedidos = await repository.readTotalPedidos()
-  if (!cantImpreso) {
-    totalPedidos[0] = Number(totalPedidos[0]) + 1;
-    cantImpreso = true;
-  }
-  res.json(totalPedidos);
+app.get('/api/pedidos/total', (req, res) => {
+  res.json(totalPrueba);
 });
 
 app.get('/checkout/:name', (req, res) => {
   let param = req.params.name;
-  if (idMp == param) {
+  if (idMp == param && estado == "approved") {
     res.sendFile(path.join(__dirname, "public/checkout/sucess.html"));
+  } else if (idMp == param && estado == "in_process") {
+    res.sendFile(path.join(__dirname, "public/checkout/pending.html"));
   } else {
     res.sendFile(path.join(__dirname, "public/notfound.html"));
   }
@@ -281,11 +293,18 @@ app.post('/api/pedidos', requestTotalPedidos(), async (req, res) => {
   let newTotal = res.newTotal;
   let pedidos = await repository.readPedidos()
   req.body.idPago = idMp;
-  if (pedidos.some(element => element.idPago == req.body.idPago)) {
-    // nada
+  req.body.estado = estado;
+  if (typeof pedidos === 'undefined') {
+    pedidos = [req.body];
+    repository.writePedidos(pedidos);
   } else {
-    pedidos.push(req.body)
-    repository.writePedidos(pedidos)
+    if (pedidos.some(element => element.idPago == req.body.idPago)) {
+      // nada
+    } else {
+      pedidos.push(req.body)
+      repository.writePedidos(pedidos)
+    }
   }
+  
   res.sendStatus(200);
 });
