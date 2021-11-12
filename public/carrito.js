@@ -101,7 +101,7 @@ async function actualizarCategory(categoria){
     sessionStorage.setItem("productsDisplaying", JSON.stringify(filtro));
     sessionStorage.setItem("category", categoria);
     if (window.location.pathname == "/") {
-        window.location.href = window.location.href + "catalogo/catalogo.html";
+        window.location.href = window.location.hostname + "/catalogo/catalogo.html";
     } else {
         window.location.href = window.location.href.replace(window.location.pathname, "/catalogo/catalogo.html");
     } 
