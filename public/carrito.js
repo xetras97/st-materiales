@@ -15,12 +15,25 @@ if (window.addEventListener) {
 // FUNCIONES //
 function agregarAlCarrito() {
     const cantidad = document.getElementById("cantidad-items");
-    for (let i = 0; i < cantidad.value; i++) {
+    if (cantidad.value <= item.stock) {
+       for (let i = 0; i < cantidad.value; i++) {
         carrito.push(item);
+        };
+        item.stock -= cantidad.value;
+        guardarCarrito();
+        actualizarCarrito();
+        displayEtiquetaCarrito()
+    } else {
+        alert(`No tenemos la cantidad que busca en stock. 
+        Solo quedan ${item.stock} unidades`)
     }
-    guardarCarrito();
-    actualizarCarrito();
-    displayEtiquetaCarrito()
+
+    if (item.stock < 1) {
+        let btnAgregar = document.getElementById("btn-agregar");
+        btnAgregar.setAttribute("disabled", "");
+        btnAgregar.innerText = "Sin stock";
+        btnAgregar.setAttribute("onclick", "");
+    };
 };
 
 function guardarCarrito() {
@@ -93,8 +106,8 @@ if (!sessionStorage.length) {
     localStorage.setItem('getSessionStorage', 'foobar');
     localStorage.removeItem('getSessionStorage', 'foobar');
 };
- let ventana = window.location.href;
 //FUNCION PARA IR DIRECTO A CATEGORIA EN CATALOGO (todas las paginas)
+let ventana = window.location.href;
 async function actualizarCategory(categoria){
     let productsList = await (await fetch("/api/products")).json();
     let filtro = productsList.filter(producto => producto.category == categoria);
@@ -111,3 +124,12 @@ function eliminarCategory(){
     sessionStorage.removeItem("category");
     sessionStorage.removeItem("productsDisplaying");
 }
+
+
+function cantidadUnidades (){
+   const cantidadItems = carrito.reduce((contadorItem, item) => {
+    contadorItem[item.id] = (contadorItem[item.id] || 0) + 1;
+    return contadorItem;
+}, {});
+console.log(cantidadItems); 
+};
