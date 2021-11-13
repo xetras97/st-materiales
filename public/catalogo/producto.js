@@ -29,6 +29,13 @@ async function traerLocalidades() {
 }
 
 function displayItem(item) {
+    if (carrito.some(elem => elem.id == item.id)) {
+        carrito.forEach(elem => {
+            if (elem.id == item.id) {
+                item.stock = elem.stock;
+            }
+        });
+    };
     let htmlProduct = `
     <div class="col-12 ps-3 mb-1">
         <nav aria-label="breadcrumb">
@@ -58,7 +65,7 @@ function displayItem(item) {
                 <label for="floatingInputValue">Cant</label>
             </div>
             <div class="col-9 text-center">
-                <button id="btn-agregar" class="btn btn-st text-uppercase text-dark fw-bold" type="button" onclick="agregarAlCarrito(), notificacion()">Agregar al carrito</button>
+                <button id="btn-agregar" class="btn btn-st text-uppercase text-dark fw-bold" type="button" onclick="agregarAlCarrito()">Agregar al carrito</button>
             </div>
             <a href="#" class="like col-1 text-center"><i class="bi bi-star fs-2"></i></a>
         </form>
@@ -115,7 +122,13 @@ function displayItem(item) {
         btnAgregar.setAttribute("disabled", "");
         btnAgregar.innerText = "Sin stock";
         btnAgregar.setAttribute("onclick", "");
-    };
+    }
+    // } else if (carrito.some(elem => elem.id == item.id && elem.cantidad == item.stock)) {
+    //     let btnAgregar = document.getElementById("btn-agregar");
+    //     btnAgregar.setAttribute("disabled", "");
+    //     btnAgregar.innerText = "Sin stock";
+    //     btnAgregar.setAttribute("onclick", "");
+    // };
 };
 
 async function displayRelated (item) {

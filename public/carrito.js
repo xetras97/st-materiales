@@ -15,19 +15,27 @@ if (window.addEventListener) {
 // FUNCIONES //
 function agregarAlCarrito() {
     const cantidad = document.getElementById("cantidad-items");
-    if (cantidad.value <= item.stock) {
-       for (let i = 0; i < cantidad.value; i++) {
-        carrito.push(item);
+    if (cantidad.value <= item.stock) {  
+        if (carrito.some(elem => elem.id == item.id)){
+            carrito.forEach(element => {
+                if (element.id == item.id){
+                    element.cantidad += Number(cantidad.value);
+                    element.stock -= Number(cantidad.value);
+                }
+            });
+        } else {
+            item.cantidad = Number(cantidad.value);
+            carrito.push(item);
         };
-        item.stock -= cantidad.value;
+        item.stock -= Number(cantidad.value);
         guardarCarrito();
         actualizarCarrito();
-        displayEtiquetaCarrito()
+        displayEtiquetaCarrito();
+        notificacion();
     } else {
         alert(`No tenemos la cantidad que busca en stock. 
         Solo quedan ${item.stock} unidades`)
-    }
-
+    };
     if (item.stock < 1) {
         let btnAgregar = document.getElementById("btn-agregar");
         btnAgregar.setAttribute("disabled", "");
@@ -63,8 +71,12 @@ function displayEtiquetaCarrito() {
     let etiqueta = document.getElementById("etiqueta-carrito");
     let botonCarrito = document.getElementById("btn-carrito");
     if (carrito.length >= 1) {
+        let cantItems = 0;
+        carrito.forEach(element => {
+            cantItems += element.cantidad;
+        });
         etiqueta.classList.remove("d-none");
-        etiqueta.innerText = carrito.length;
+        etiqueta.innerText = cantItems;
         botonCarrito.setAttribute("href", "../detalles-orden.html");
     }
 }
@@ -124,12 +136,3 @@ function eliminarCategory(){
     sessionStorage.removeItem("category");
     sessionStorage.removeItem("productsDisplaying");
 }
-
-
-function cantidadUnidades (){
-   const cantidadItems = carrito.reduce((contadorItem, item) => {
-    contadorItem[item.id] = (contadorItem[item.id] || 0) + 1;
-    return contadorItem;
-}, {});
-console.log(cantidadItems); 
-};

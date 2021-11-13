@@ -150,11 +150,11 @@ function displayCarritoItems (){
   carrito.forEach(element => {
       document.getElementById("detalles-item-container").innerHTML += `
       <div class="d-flex justify-content-between mt-1 px-2">
-          <p class="card-text text-muted">${element.name}</p>
-          <p class="card-text text-muted">$${element.price}</p>
+          <p class="card-text text-muted">${element.cantidad} x ${element.name}</p>
+          <p class="card-text text-muted">$${element.price * element.cantidad}</p>
       </div>
       `
-      subtotal += element.price;
+      subtotal += (element.price * element.cantidad);
   });
   document.getElementById("carrito-subtotal").innerText += subtotal;
   document.getElementById("carrito-total").innerText += subtotal;
@@ -238,7 +238,7 @@ document.getElementById('btn-checkout').addEventListener("click", function (){
       orden.productos.push({
         titulo: element.name,
         precio: element.price,
-        cantidad: 1
+        cantidad: element.cantidad
       });
     });
   
