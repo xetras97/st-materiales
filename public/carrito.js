@@ -119,11 +119,7 @@ if (!sessionStorage.length) {
     localStorage.removeItem('getSessionStorage', 'foobar');
 };
 //FUNCION PARA IR DIRECTO A CATEGORIA EN CATALOGO (todas las paginas)
-<<<<<<< HEAD
 const ventana = window.location.href;
-=======
-let ventana = window.location.href;
->>>>>>> cantidades
 async function actualizarCategory(categoria){
     let productsList = await (await fetch("/api/products")).json();
     let filtro = productsList.filter(producto => producto.category == categoria);
@@ -133,11 +129,7 @@ async function actualizarCategory(categoria){
         window.location.href = ventana + "catalogo/catalogo.html";
     } else {
         window.location.href = window.location.href.replace(window.location.pathname, "/catalogo/catalogo.html");
-<<<<<<< HEAD
-    } 
-=======
     };
->>>>>>> cantidades
 }
 
 function eliminarCategory(){
