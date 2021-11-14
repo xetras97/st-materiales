@@ -20,7 +20,7 @@
     top: -20%;
     left: 2%;
     background-color: white;
-    font-size: 1rem;
+    font-size: 1.3rem;
 }
 
 #catalogo-display .card-body:hover > .badge-price{
