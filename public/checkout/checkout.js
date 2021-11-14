@@ -64,6 +64,7 @@ document.getElementById("envio-form").addEventListener("submit", (event) =>{
     document.getElementById("panelsStayOpen-collapseThree").classList.add("show");
     document.getElementById("btn-pago").classList.remove("collapsed");
     document.getElementById("btn-pago").removeAttribute("disabled", "")
+    document.getElementById("btn-efectivo").classList.add("d-none")
     limpiarMetodos();
     calcularEnvio();
     fetch("/forms", {
@@ -82,6 +83,7 @@ document.getElementById("retiro-form").addEventListener("submit", (event) =>{
     document.getElementById("panelsStayOpen-collapseThree").classList.add("show");
     document.getElementById("btn-pago").classList.remove("collapsed");
     document.getElementById("btn-pago").removeAttribute("disabled", "")
+    document.getElementById("btn-efectivo").classList.remove("d-none")
     limpiarMetodos();
     envioEnRetiro();
   };
@@ -322,7 +324,7 @@ function whatsappCheckout (metodoDePago) {
 function productosName() {
   let productosText = "";
   for (let p = 0; p < carrito.length; p++) {
-    productosText += `${(p + 1)}- ` + carrito[p].name + " ";
+    productosText += `\n${carrito[p].cantidad} x ${carrito[p].name}`;
   }
   return productosText;
 }
@@ -330,7 +332,7 @@ function productosName() {
 function carritoSuma() {
   let precio = 0;
   carrito.forEach(element => {
-    precio += element.price
+    precio += (element.price * element.cantidad)
   });
   return precio;
 }
