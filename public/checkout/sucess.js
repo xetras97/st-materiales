@@ -15,7 +15,7 @@ async function traerCompradoryPedidos () {
     totalPedidos = await (await fetch ("/api/pedidos/total")).json();
     let nombresProductos = "";
     carrito.forEach(element => {
-        nombresProductos += `${element.name}\n`
+        nombresProductos += `${element.cantidad} x ${element.name}\n`
     });
     pedido = {
         numero: Number(totalPedidos),
@@ -61,7 +61,7 @@ function displayResumen() {
     carrito.forEach(element => {
         productsHTML += `
         <div class="col-11 offset-1 text-start d-flex align-items-center text-muted p-0">
-            <p class="mb-0 ms-2">${element.name}</p>
+            <p class="mb-0 ms-2">${element.cantidad} x ${element.name}</p>
         </div>
         `
     });
@@ -82,4 +82,14 @@ async function enviarPedido () {
         },
         body: JSON.stringify(pedido)
       })
-}
+};
+
+async function enviarNuevoStock () {
+    fetch("/api/products",{
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(carrito)
+      })
+};

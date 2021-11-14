@@ -29,6 +29,13 @@ async function traerLocalidades() {
 }
 
 function displayItem(item) {
+    if (carrito.some(elem => elem.id == item.id)) {
+        carrito.forEach(elem => {
+            if (elem.id == item.id) {
+                item.stock = elem.stock;
+            }
+        });
+    };
     let htmlProduct = `
     <div class="col-12 ps-3 mb-1">
         <nav aria-label="breadcrumb">
@@ -53,13 +60,12 @@ function displayItem(item) {
         <p id="stock-count" class="d-none stock fs-5">¡Últimas unidades disponibles!</p>
         <form class="form-floating d-flex">
             <div class="col-2 form-floating">
-                <input id="cantidad-items" type="number" min="1" max="10" class="form-control text-center"
+                <input id="cantidad-items" type="number" min="1" max="${item.stock}" class="form-control text-center"
                     id="floatingInputValue" placeholder="1" value="1">
                 <label for="floatingInputValue">Cant</label>
             </div>
             <div class="col-9 text-center">
-                <button class="btn btn-st text-uppercase text-dark fw-bold" type="button" onclick="agregarAlCarrito(), notificacion()">Agregar al
-                    carrito</button>
+                <button id="btn-agregar" class="btn btn-st text-uppercase text-dark fw-bold" type="button" onclick="agregarAlCarrito()">Agregar al carrito</button>
             </div>
             <a href="#" class="like col-1 text-center"><i class="bi bi-star fs-2"></i></a>
         </form>
@@ -104,12 +110,25 @@ function displayItem(item) {
     document.getElementById("title-name").innerText += ` - ${item.name}`;
     document.getElementById("toast-body"). innerHTML = `Agregaste <b>${item.name}</b> al carrito`;
 
-    if (item.stock <= 5) {
+    if (item.stock <= 5 && item.stock >= 1) {
         document.getElementById("stock-count").classList.remove("d-none");
         document.getElementById("stock-count").classList.add("d-block");
     } else {
         document.getElementById("price-margin").classList.add("mb-3")
+    };
+
+    if (item.stock < 1) {
+        let btnAgregar = document.getElementById("btn-agregar");
+        btnAgregar.setAttribute("disabled", "");
+        btnAgregar.innerText = "Sin stock";
+        btnAgregar.setAttribute("onclick", "");
     }
+    // } else if (carrito.some(elem => elem.id == item.id && elem.cantidad == item.stock)) {
+    //     let btnAgregar = document.getElementById("btn-agregar");
+    //     btnAgregar.setAttribute("disabled", "");
+    //     btnAgregar.innerText = "Sin stock";
+    //     btnAgregar.setAttribute("onclick", "");
+    // };
 };
 
 async function displayRelated (item) {

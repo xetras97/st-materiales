@@ -34,6 +34,22 @@ app.get('/api/products', requestProducts(), (req, res) => {
   res.json(res.products);
 });
 
+app.post('/api/products', async (req, res) => {
+  let productos = await repository.read();
+  console.log(req.body);
+  for (let i = 0; i < productos.length; i++) {
+    const element = productos[i];
+    req.body.forEach(item => {
+      if (element.id == item.id) {
+        element.stock -= item.cantidad
+        console.log(element.stock);
+      }
+    });
+  };
+  repository.write(productos);
+  res.status(200);
+});
+
 app.get('/api/envios', async (req, res) => {
   let localidades = await repository.readEnvios()
   res.json(localidades);
@@ -115,38 +131,6 @@ function requestProducts() {
     next()
   }
 };
-
-function pagination(model) {
-  return (req, res, next) => {
-    const page = parseInt(req.query.page);
-    const limit = parseInt(req.query.limit);
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-
-    const resultProducts = {};
-
-    if (endIndex < model.length && startIndex > 0) {
-      resultProducts.info = {
-        next: `/api/products/pages?page=${page + 1}&limit=16/`,
-        prev: `/api/products/pages?page=${page - 1}&limit=16/`,
-      };
-    } else if (endIndex < model.length) {
-      resultProducts.info = {
-        next: `/api/products/pages?page=${page + 1}&limit=16/`,
-        prev: "",
-      };
-    } else if (startIndex > 0) {
-      resultProducts.info = {
-        next: "",
-        prev: `/api/products/pages?page=${page - 1}&limit=16/`,
-      };
-    }
-    resultProducts.results = model.slice(startIndex, endIndex);
-
-    res.paginatedResults = resultProducts;
-    next()
-  }
-}
 
 app.get('/catalogo/:name', requestProducts(), (req, res) => {
   let products = res.products
