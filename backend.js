@@ -292,3 +292,7 @@ app.post('/api/pedidos', requestTotalPedidos(), async (req, res) => {
   
   res.sendStatus(200);
 });
+
+app.get('*', function(req, res){
+  res.status(404).sendFile(path.join(__dirname, "public/notfound.html"));
+});
