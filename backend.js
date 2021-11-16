@@ -41,7 +41,7 @@ app.post('/api/products', async (req, res) => {
     const element = productos[i];
     req.body.forEach(item => {
       if (element.id == item.id) {
-        element.stock -= item.cantidad
+        element.stock = item.stock;
         console.log(element.stock);
       }
     });
