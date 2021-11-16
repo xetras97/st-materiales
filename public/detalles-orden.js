@@ -144,3 +144,25 @@ function cambiarCantidad (cantidad, itemId) {
         };
     });
 };
+
+async function chequearStock() {
+    let productsList = await (await fetch("/api/products")).json();
+    let allGood = true;
+    let error = "";
+    carrito.forEach(element => {
+        let productIndex = productsList.indexOf(productsList.find(e=> e.id == element.id));
+        console.log (productsList[productIndex].stock);
+        console.log (element.cantidad);
+        if (productsList[productIndex].stock < element.cantidad){
+           console.log("todo mal")
+           allGood = false;
+           error += `\n - ${element.name}`
+        }  
+    })
+    
+    if (! allGood) {
+        alert(`No disponemos las unidades deseadas de los siguientes articulos:${error}\nCambie las cantidades para poder continuar con la compra`)
+    } else {
+        window.location.assign("./checkout/checkout.html");
+    };
+}

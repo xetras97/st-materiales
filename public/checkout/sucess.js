@@ -2,6 +2,7 @@ window.onload = async () => {
     await traerCompradoryPedidos();
     await enviarPedido ()
     displayResumen()
+    enviarNuevoStock ()
 };
 window.onbeforeunload = function() {
     return "Al salir o recargar la pagina no podra acceder a su resumen, por favor descarguelo o imprimalo";
@@ -74,7 +75,7 @@ function displayResumen() {
     document.getElementById("total-pedidos").innerText += Number(totalPedidos);
 }
 
-async function enviarPedido () {
+function enviarPedido () {
     fetch("/api/pedidos",{
         method: "POST",
         headers: {
@@ -84,7 +85,7 @@ async function enviarPedido () {
       })
 };
 
-async function enviarNuevoStock () {
+function enviarNuevoStock () {
     fetch("/api/products",{
         method: "POST",
         headers: {
@@ -92,4 +93,11 @@ async function enviarNuevoStock () {
         },
         body: JSON.stringify(carrito)
       })
+};
+
+function resetCarrito () {
+    carrito = [];
+    guardarCarrito();
+    actualizarCarrito();
+    displayEtiquetaCarrito();
 };
